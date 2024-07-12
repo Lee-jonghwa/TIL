@@ -152,3 +152,96 @@ markdown 공식 문서를 참고하여 추후 사용하면 댐
 
 ### 이미지 걸기
 ![고양이](https://postfiles.pstatic.net/MjAxOTEwMjhfMTM5/MDAxNTcyMjU1MjcxMTgy.KQlNPKpAtHC3dK2F6Vw4n8rK3y3XPTS4wLVpmAWy0a0g.D2U5-vKB_GCl2QRNUMjYZNmdit7gDa25FBXLvYwrE5Ig.PNG.charmed__/image.png?type=w966)# Lee-jonghwa
+
+
+
+
+7/12
+
+
+# git 심화
+
+
+```
+git log --oneline : commit의 로그를 알 수 있으면서도 hash값을 알 수 있음 
+```
+
+**Hash 값(식별값)이란?**
+- commit의 고유한 값 --> 변경 불가
+- 커밋 메시지를 수정할 때 해시값 필요
+
+## commit 메시지 수정
+
+```
+git commit --amend
+```
+- vim 에디터로 들어가짐
+- 메시지 수정 후 저장 -> esc -> :wq(아래창 입력)
+- 메시지 저장 X -> esc -> :q!
+- 아무것도 수정하지 않았을 때 -> :q (수정사항이 있으면 사용 못함)
+
+메시지는 수정 하지 않더라도 해시값은 변경됨(시간이 변경되기 때문)
+
+** vim editor에서 instert키 누르면 아래 창에 insert 뜨고 메시지 수정하기 편해짐
+
+
+## revert & reset
+
+### git revert : 특정 커밋을 없던 일로 만듦
+
+vim eidtor에서 종료하면 커밋과 함께 해당 파일도 삭제됨
+
+```
+git revert 없앨 commit hash 앞 네글자
+```
+(hash값은 --amend로 확인 후 작성)
+
+주의 : revert한 commit은 없었던 일로 되는데, 기존 커밋은 삭제되지 않고 새로운 커밋 작성이 됨
+--> git log로 확인
+
+
+### git reset : 이전 commit으로 되돌리기
+
+#### 1. --soft
+
+    : commit에 기록된 내역을 삭제하나 staging area에 남아 있음(폴더에서 add가 된 상태)
+    즉, 해당 commit까지 commit 내역을 삭제하고 add 해둠
+
+```
+git reset --soft 해시값
+```
+
+#### 2. --mixed
+
+    : commit에 기록된 내역을 삭제하나 working directory에 남아 있음(폴더에만 남은 상태)
+    즉, 해당 commit까지 commit 내역을 삭제하고, 폴더에 파일을 남김
+
+```
+git reset --mixed 해시값
+```
+
+#### 3. --hard
+
+    : commit에 기록된 내역을 모두 삭제
+    즉, 해당 commit까지 commit 내역이 삭제되면서, 모든 상태를 초기화 함
+
+```
+git reset --hard 살릴 마지막 commit hash값
+```
+
+
+## staging area에서 working directory로 되돌리는 방법
+
+### git 저장소에 commit이 없을 때
+: 프레임워크를 커밋할 때 API를 넣거나 .gitignore을 하지 않았다면?!
+
+```
+git rm --cached 뺄 파일
+```
+
+### git 저장소에 commit이 있을 때
+
+```
+git restore --staged 뺄 파일
+```
+
