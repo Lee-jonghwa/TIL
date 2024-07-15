@@ -1,6 +1,6 @@
 
 
-''' # 데이터 타입 출력 실습
+# 데이터 타입 출력 실습
 
 a1 = 1
 a2 = 2.3
@@ -77,8 +77,6 @@ a = [1, 2, 3]
 sum = 8
 print(sum(a))
 
-'''
-
 # 부동소수점 오류
 
 # 거의 같다는 것에 대한 정의
@@ -98,7 +96,7 @@ num_b = f'{b:.1f}'
 print(num_a)
 print(num_b)
 
-'''
+
 from decimal import Decimal
 
 a = Decimal('3.2') - Decimal('3.1')
@@ -116,8 +114,6 @@ print(f'{a:.3f}')
 
 # ctrl + 매서드 클릭하면 해당 매서드의 설명 볼 수 있음
 
-'''
-'''
 
 str1 = [1, 2, 3]
 str1[0] = 'a'
@@ -173,8 +169,3 @@ print(greeting[::-1])
 print(len(greeting))
 
 
-
-
-
-
-'''
