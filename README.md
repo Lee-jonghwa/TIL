@@ -246,10 +246,7 @@ git restore --staged 뺄 파일
 ```
 
 
-
-7/15
-
-# 파이썬 라이브 강의 Basic Syntax 1
+# Python Basic Syntax 1
 
 ![alt text](image.png)
 
@@ -470,28 +467,336 @@ https://peps.python.org/pep-0008/
 
 
 
-## 구글링
+#### 구글링
 
 
-### 검색어
+검색어
 - 영어로 검색 best
 - 완벽한 문장이 아니어도 좋음, 키워드만 정확하게!
 
-### 신뢰할 수 있는 출처
-#### 공식 문서
+신뢰할 수 있는 출처
+공식 문서
 - 프로그래밍 언어 공식 문서 및 라이브러리 문서
-#### 커뮤니티 사이트
+커뮤니티 사이트
 - Stack Overflow, GitHub Issues 등 개발자 커뮤니티
 
-## AI
+#### AI
 - AI가 제시하는 솔루션의 가치를 확인하기 어려우므로, 기본 개념을 다지는 것은 필요함!
   스스로 다양한 문제 해결하려는 노력 필요
 - ```논리적 사고력```과 ```문제해결 능력```이 중요
 - 보조 수단으로서의 활용 방안 고민 필요
   
-## 주석
+주석
 - 임시로 코드 비활성 (함수는 pass 많이 씀)
 - ***다른 개발자나 자신에게 코드의 의도나 동작을 설명하는데 도움***
 
-## Python Tutor
+Python Tutor
 공부할 때 사용하면 조음!
+
+
+0716
+
+### List
+
+***list : 여러 개의 값을 순서대로 저장하는 변경 가능한 시퀀스 자료형***
+
+#### 리스트 특징
+- 0개 이상의 객체를 포함, 데이터 목록 저장
+- []로 표기
+- 어떤 자료형도 데이터로 저장할 수 있음
+- 요소가 가변적임
+
+***리스트 요소로 있는 리스트 안의 시퀀스도 인덱싱할 수 있음***
+
+```
+# 중첩된 리스트
+my_list = [1, 2, 3, ['python', 'hello', 100]]
+print(len(my_list))
+print(my_list[3][1])
+print(my_list[3][1][-1])
+
+# 리스트는 가변
+my_list = [1, 2, 3]
+my_list[0] = 100
+print(my_list)
+```
+
+### Tuple
+
+***tuple : 여러 개의 값을 순서대로 저장하는 변경 불가능한 시퀀스 자료형***
+
+#### tuple의 특징
+- 0개 이상의 객체를 포함한 데이터 목록 저장
+- ()로 표기
+- 데이터는 어떤 자료형도 저장할 수 있음
+- 하나의 요소만 가지고 있을 땐 (a,)로 표기해야함
+  **쉼표가 없으면 int로 됨**
+- 요소가 불변적임
+- 재할당은 동일
+- 튜플은 불변 특성을 사용해서 안전하게 여러개의 값을 전달, 그룹화, 다중할당 등에 주로 사용 ==> 파이썬 내부동작에 주로 사용되며 개발자가 직접 사용할 일은 잘 없음.
+
+```
+x, y = (10, 20)
+
+print(x)
+print(y)
+
+# 파이썬은 쉼표를 튜플 생성자로 사용하여 괄호는 생략 가능
+x, y = 10, 20
+```
+
+### Range
+
+***range : 연속된 "정수" 시퀀스를 생성하는 변경 불가능한 자료형***
+
+#### range 표현
+- range(시작 값, 끝 값, 증가 값)
+- range(n) : 0부터 n-1까지의 숫자 시퀀스
+  **range(n)은 숫자 n개를 생성하는 표현-> n은 빠짐**
+- range(n, m) : n부터 m-1까지의 숫자 시퀀스
+
+#### range 특징
+- 증가 값이 없으면 1씩 증가
+- 증가 값이 음수이면 감소 / 양수이면 증가
+- 증가 값이 0이면 에러
+- 증가 값이 음수이면 시작 값 > 끝 값
+- 증가 값이 양수이면 시작 값 < 끝 값
+
+```
+my_range_1 = range(5)
+my_range_2 = range(1, 10)
+
+print(my_range_1)  # range(0, 5)
+print(my_range_2)  # range(1, 10)
+```
+
+## Non-sequence Types
+
+### Dict
+
+***dict : key-value 쌍으로 이루어진 "순서와 중복이 없는" "변경 가능"한 자료형***
+
+#### dictionary 표현
+- key는 변경 불가능한 자료형 사용
+- value는 모든 자료형 사용
+- {}로 표기
+
+#### dictionary 특징
+- key는 변경 불가
+- key를 통해 value에 접근
+- value는 모든 자료형 사용
+- {}로 표기
+- API 소통에서 기본적인 형태로 사용
+
+
+[국가1, 국가2, ... ,국가 108]
+{국가명 : 국가1, 국가명 : 국가2, ...}
+
+한국을 찾으세요
+
+처음부터 순차적으로 갈 수 밖에 없음 -> 시간이 오래 걸림
+딕셔너리를 활용하면 키로 검색하면 끝
+
+
+### Set(집합자료형)
+
+**set : 순서와 중복이 없는 변경 가능한 자료형**
+
+#### set의 특징
+- {}로 표현 -> dict와 겹치게 됨
+  a = {}과 같이 빈 내용으로 생성하면 dict로 됨
+- 수학에서의 집합과 동일한 연산 처리 가능
+- 순서와 중복 x ==> 리스트의 중복 값 처리할 때 사용할 수 있으나, 순서는 다시 맞추어야 함
+
+```
+my_set_1 = set() # 빈 set 만들기
+my_set_2 = {1, 2, 3}
+my_set_3 = {1, 1, 1}
+print(my_set_1)  # set()
+print(my_set_2)  # {1, 2, 3}
+print(my_set_3)  # {1}
+
+# 합집합
+print(my_set_1 | my_set_2)  # {1, 2, 3, 6, 9}
+# 차집합
+print(my_set_1 - my_set_2)  # {1, 2}
+# 교집합
+print(my_set_1 & my_set_2)  # {3}
+```
+
+## Other Types
+
+### None
+
+- 값이 없음을 표현하는 자료형
+- **비어있다는 뜻이 아님**
+- 변수를 할당 했는데, 현재는 값이 없을 때 사용
+
+```
+variable = None
+print(variable)  # None
+```
+
+### Boolean
+
+boolean : 참(True)과 거짓(False)을 표현하는 자료형
+
+- 비교 / 논리 연산의 평가 결과로 사용
+- 조건 / 반복문과 주로 사용
+
+```
+bool_1 = True
+bool_2 = False
+print(bool_1)  # True
+print(bool_2)  # False
+print(3 > 1)  # True
+print('3' != 3)  # True
+```
+
+## Collection
+
+- 여러 개의 항목 또는 요소를 담는 자료 구조
+![alt text](image-2.png)
+
+
+### 불변과 가변의 차이
+```
+# mutable (가변)
+my_list = [1, 2, 3]
+my_list[0] = 100
+
+# immutable (불변)
+my_str = 'hello'
+my_str[0] ='z'
+```
+
+## Type Conversion
+
+한 데이터 타입을 다른 데이터 타입으로 변환하는 과정
+암시적 형변환과 명시적 형변환으로 나뉨
+
+### 암시적 형변환(Implicit Type Conversion)
+
+파이썬이 자동으로 수행하는 형변환
+
+#### 예시
+- 정수와 실수의 연산에서 정수가 실수로 변환
+- Boolean과 Numeric Type에서만 가능
+```
+print(3 + 5.0) # 8.0
+print(True + 3) # 4
+print(True + False) # 1
+```
+
+### 명시적 형변환(Explicit Type Conversion)
+
+프로그래머가 직접 지정하는 형변환
+
+#### 예시
+- str -> int / float : 형식에 맞는 숫자만 가능
+   # 소수 int 하면 소수점 버림
+```
+print(int('1')) # 1
+print(int('3.5')) # ValueError
+print(int(3.5)) # 3
+print(float('3.5')) # 3.5
+```
+- int / float -> str : 형식에 상관없이 가능
+
+```
+print(str(1) + '등') # 1등
+```
+
+## 연산자
+
+### 산술 연산자
+![alt text](image-3.png)
+
+### 복합 연산자
+![alt text](image-4.png)
+
+### 비교 연산자
+![alt text](image-5.png)
+
+#### is 비교 연산자
+- 메모리 내에서 같은 객체를 참조하는지 확인(값의 주소도 같아야 함)
+- == 는 동등성(equality), is는 식별성(identity)
+- 값을 비교하는 == 와 다름
+- None 이나 Boolean을 비교할 때 많이 씀
+
+```
+# 비교 연산자
+print(3 > 6)  # False
+print(2.0 == 2)  # True
+print(2 != 2)  # False
+print('HI' == 'hi')  # False
+print(1 == True)  # True
+
+# SyntaxWarning: "is" with a literal. Did you mean "=="?
+# ==은 값(데이터)을 비교하는 것이지만 is는 레퍼런스(주소)를 비교하기 때문
+# 아래 조건은 항상 False이기 때문에 is 대신 ==를 사용해야 한다는 것을 알림
+print(1 is True)  # False
+print(2 is 2.0)  # False
+print(0 == None) # False
+print(1 == True)  # True
+print(2 == 2.0)  # True
+```
+
+### 논리 연산자
+![alt text](image-6.png)
+
+### 단축평가
+
+논리 연산에서 두 번째 피연산자를 평가하지 않고 결과를 결정하는 동작
+두 번째 연산과 상관없이 결과가 동일할 때 해당
+
+```
+# 단축 평가
+
+vowels = 'aeiou'
+
+print(('a' and 'b') in vowels)  # False
+#괄호 안 부터 평가 -> 'a' and 'b' -> 둘 다 값이 있으니 True로 평가됨. 나오는 건 'b'
+#'b' in vowels로 처리 되므로 False
+
+print(('b' and 'a') in vowels)  # True
+
+print(3 and 5)  # 5 -> 평가 5까지
+print(3 and 0)  # 0 -> 평가 0까지
+print(0 and 3)  # 0
+# and 는 첫 값에서 false가 나오면 의미가 없어지므로 종료됨 --> 0에서 멈춤
+print(0 and 0)  # 0
+
+print(5 or 3)  # 5
+# or 는 둘 중 하나가 True가 나오면 되므로 True가 나오면 멈춤 --> 5에서 멈춤
+print(3 or 0)  # 3
+print(0 or 3)  # 3
+print(0 or 0)  # 0 --> 뒤의 0
+```
+
+![alt text](image-7.png)
+
+#### 사용 이유
+- 코드 실행을 최적화하고, 불필요한 연산을 피할 수 있도록 함.
+
+### 멤버십 연산자
+- 특정 값이 시퀀스나 다른 컬렉션에 속하는지 여부를 확인
+- 딕셔너리의 경우는 key로 사용할 수 있음
+
+![alt text](image-8.png)
+
+### 시퀀스형 연산자
+![alt text](image-9.png)
+
+```
+# 시퀀스형 연산자
+
+print('Gildong' + ' Hong')  # Gildong Hong
+print('hi' * 5)  # hihihihihi
+
+print([1, 2] + ['a', 'b'])  # [1, 2, 'a', 'b']
+print([1, 2] * 2)  # [1, 2, 1, 2]
+```
+
+#### 연산자의 우선순위
+![alt text](image-10.png)
