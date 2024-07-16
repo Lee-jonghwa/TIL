@@ -248,9 +248,24 @@ git restore --staged 뺄 파일
 
 # Python Basic Syntax 1
 
+## 참고 1 : VS코드 단축키
+- 전체 블록 지정 : ctrl + a
+- 한 줄 블록 지정 : ctrl + l
+- 커서 이동 시 : Home, End
+- 동시에 여러 개의 커서 생성 : alt + 마우스 왼쪽 / ctrl + alt + 방향키
+- 한 줄 복사 붙여넣기 : alt + shift + 방향키 (드래그 필요 없음)
+- 뒤로가기 : ctrl + z
+- 앞으로가기 : ctrl + y, ctrl + shift + z
+- 터미널 열기 : ctrl + j, ctrl + `
+- 사이드바 열기 : ctrl + b
+- 편집기 종료 : ctrl + w
+- settings : ctrl + ,
+- 찾기 : ctrl + f
+- 전체 검색(폴더 내 파일 전체 검색) : ctrl + shift + f
+
 ![alt text](image.png)
 
-### 프로그래밍이란 ?
+## 참고 2 : 프로그래밍이란 ?
 
 길찾기의 기준에서
 길을 적어주는 것 : 프로그램 작성
@@ -267,15 +282,15 @@ git restore --staged 뺄 파일
 
 #### 인터프리터 활용 방법
 
-1. shell -> 한 번에 한 명령어 씩 입력(git bash와 유사)
+shell -> 한 번에 한 명령어 씩 입력(git bash와 유사)
 
 git bash에서 $python -i로 하면 파이썬 할 수 있음
 => 단일 문장을 테스트 하긴 좋지만 여러 문장 하긴 어려움
 => 끝 땐 exit()
 
-2. py파일 하기
+py파일 하기
 파이썬 켤 때 위치를 설정할 필요 있음
-$ python 01-basic.py
+```$ python 01-basic.py```
 -> bash terminal에서 작동 시키는 법
 하지만 경로가 바뀌기 때문에 실습시 잘 사용하지 X
 
@@ -346,6 +361,10 @@ a : 변수
 --> 유한 정밀도(무한대 숫자를 저장하기 어려움으로 인한 이유)
 ==> floating point rounding error(부동소수점 에러) : 실수를 2진수로 변환하는 과정에서 발생하는 오차
 여러 모듈(decimal 등)을 활용해서 오차를 해결함
+
+***양의 무한대, 음의 무한대***
+양의 무한대 : float('inf')
+음의 무한대 : float('-inf')
 
 **ctrl + 매서드 클릭하면 해당 매서드의 설명 볼 수 있음**
 
@@ -444,7 +463,7 @@ print(len(my_str)) # 5
 ```my_str[::-1]```
 
 #### 변경 불가능한 문자열
-리스트 값을 변경하는 시도를 하면 오류 뜸
+문자열 값을 변경하는 시도를 하면 오류 뜸
 
 ```
 my_str = 'hello'
@@ -486,7 +505,7 @@ https://peps.python.org/pep-0008/
 - ```논리적 사고력```과 ```문제해결 능력```이 중요
 - 보조 수단으로서의 활용 방안 고민 필요
   
-주석
+#### 주석
 - 임시로 코드 비활성 (함수는 pass 많이 씀)
 - ***다른 개발자나 자신에게 코드의 의도나 동작을 설명하는데 도움***
 
@@ -518,7 +537,7 @@ print(my_list[3][1][-1])
 # 리스트는 가변
 my_list = [1, 2, 3]
 my_list[0] = 100
-print(my_list)
+print(my_list) # [100, 2, 3]
 ```
 
 ### Tuple
@@ -534,6 +553,7 @@ print(my_list)
 - 요소가 불변적임
 - 재할당은 동일
 - 튜플은 불변 특성을 사용해서 안전하게 여러개의 값을 전달, 그룹화, 다중할당 등에 주로 사용 ==> 파이썬 내부동작에 주로 사용되며 개발자가 직접 사용할 일은 잘 없음.
+- 알고리즘 시 방향 배열할 때 종종 사용
 
 ```
 x, y = (10, 20)
@@ -545,15 +565,28 @@ print(y)
 x, y = 10, 20
 ```
 
+방향 배열 활용 시
+```
+상하좌우 표현
+dy = [-1, 1, 0, 0]
+dx = [0, 0, 1, -1]
+
+directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+```
 ### Range
 
 ***range : 연속된 "정수" 시퀀스를 생성하는 변경 불가능한 자료형***
 
 #### range 표현
 - range(시작 값, 끝 값, 증가 값)
-- range(n) : 0부터 n-1까지의 숫자 시퀀스
+- range(n) : 0부터 n-1까지 1씩 증가하는 숫자 시퀀스
   **range(n)은 숫자 n개를 생성하는 표현-> n은 빠짐**
-- range(n, m) : n부터 m-1까지의 숫자 시퀀스
+- range(n, m) : n부터 m-1까지 1씩 증가하는 숫자 시퀀스
+- range(n, m, s)
+  1) n < m 
+   n부터 m - 1까지 s씩 증가 (m 미포함)
+  2) n > m
+   n부터 m + 1까지 s씩 감소 (m 미포함)
 
 #### range 특징
 - 증가 값이 없으면 1씩 증가
@@ -588,6 +621,19 @@ print(my_range_2)  # range(1, 10)
 - {}로 표기
 - API 소통에서 기본적인 형태로 사용
 
+#### 예제 : 중첩된 딕셔너리
+
+```
+my_dict = {
+    'a1' : {'b1':1, 'b2':2, 'b3':3},
+    'a2' : {'b1':4, 'b2':5, 'b3':6},
+    'a3' : {'b1':7, 'b2':8, 'b3':9},
+}
+
+# 8을 출력할 때
+print(my_dict['a3']['b2'])
+print(my_dict.get('a3').get('b2'))
+```
 
 [국가1, 국가2, ... ,국가 108]
 {국가명 : 국가1, 국가명 : 국가2, ...}
@@ -622,6 +668,21 @@ print(my_set_1 | my_set_2)  # {1, 2, 3, 6, 9}
 print(my_set_1 - my_set_2)  # {1, 2}
 # 교집합
 print(my_set_1 & my_set_2)  # {3}
+```
+
+#### 예시 : 로또 번호 6개 선택 코드
+```
+import random
+
+lotto_set = set()
+while len(lotto_set) < 6: # 중복은 사라지기 때문에 len() 사용
+  number = random.randint(1, 45)
+  #append와 유사
+  lotto_set.add(number)
+  #순서 상관 없고 중복 불가여야 하기 때문에 set로 활용
+
+lotto_list = list(lotto_set)
+print(sorted(lotto_list))
 ```
 
 ## Other Types
@@ -694,7 +755,7 @@ print(True + False) # 1
 
 #### 예시
 - str -> int / float : 형식에 맞는 숫자만 가능
-   # 소수 int 하면 소수점 버림
+   ***(소수 int 하면 소수점 버림)***
 ```
 print(int('1')) # 1
 print(int('3.5')) # ValueError
@@ -753,25 +814,41 @@ print(2 == 2.0)  # True
 ```
 # 단축 평가
 
+# 문자와 정수는 연산하는 방법이 다름
+# "" == False
+
 vowels = 'aeiou'
 
-print(('a' and 'b') in vowels)  # False
+# and는 모두 True 여야 True -> 연산의 뒷 부분을 알아야 함.
+ -> 앞이 True 면 뒤가 출력됨
+# or은 하나만 True여도 True -> 앞이 True면 앞이 출력 => 단축 평가
 #괄호 안 부터 평가 -> 'a' and 'b' -> 둘 다 값이 있으니 True로 평가됨. 나오는 건 'b'
+
 #'b' in vowels로 처리 되므로 False
 
+print(('a' and 'b') in vowels)  # False
 print(('b' and 'a') in vowels)  # True
 
 print(3 and 5)  # 5 -> 평가 5까지
 print(3 and 0)  # 0 -> 평가 0까지
-print(0 and 3)  # 0
+print(0 and 3)  # 0 --> 단축평가
 # and 는 첫 값에서 false가 나오면 의미가 없어지므로 종료됨 --> 0에서 멈춤
-print(0 and 0)  # 0
+print(0 and 0)  # 0 --> 단축평가
 
 print(5 or 3)  # 5
 # or 는 둘 중 하나가 True가 나오면 되므로 True가 나오면 멈춤 --> 5에서 멈춤
-print(3 or 0)  # 3
+print(3 or 0)  # 3 --> 단축평가
 print(0 or 3)  # 3
 print(0 or 0)  # 0 --> 뒤의 0
+
+print(7 and 3) # 3
+print(7 and 0) # 0
+print(0 and 7) # 0
+print(5 or 3) # 5
+print(0 or 3) # 3
+
+#and 일 때는 앞이 False 일 때 전체 결과 False, 뒤의 조건 평가하지 않음 -> 단축평가
+#or일 때는 앞이 True일 때 전체 결과 True, 뒤의 조건 평가하지 않음 -> 단축평가
 ```
 
 ![alt text](image-7.png)
@@ -800,3 +877,37 @@ print([1, 2] * 2)  # [1, 2, 1, 2]
 
 #### 연산자의 우선순위
 ![alt text](image-10.png)
+
+
+#### 복사 : 할당, 얕은 복사, 깊은 복사
+```
+# 1. 할당 : 원본 변경 x
+list1 = [1, 2, 3, 4, 5]
+list2 = list1
+list2[0] = 5
+
+print(id(list1),id(list2))
+print(list1, list2)
+
+# 2. 얕은 복사(copy()) : 객체 안에 객체가 있는 경우 원본 변경 o(메모리 주소 같음) 객체 자체의 메모리주소는 다름
+list1 = [1, 2, [3, 4]]
+list2 = list1.copy()
+list2[2][0] = 5
+
+print(id(list1),id(list2))
+print(id(list1[2]),id(list2[2]))
+print(list1, list2)
+
+# 3. 깊은 복사 (deepcopy()) : 원본 변경x, 메모리주소는 다름
+import copy
+
+list1 = [1, 2, [3, 4]]
+list2 = copy.deepcopy(list1)
+list2[2][0] = 5
+
+print(id(list1),id(list2))
+print(id(list1[2]),id(list2[2]))
+print(list1, list2)
+
+
+```

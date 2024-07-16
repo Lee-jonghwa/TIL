@@ -27,9 +27,17 @@ my_dict['banana'] = 60
 print(my_dict)
 
 #인덱스 불가 -> 키로 접근하여 key error가 뜸
-print(my_dict[1])
+# print(my_dict[1])
 
 
 # int는 변경 불가 --> 재할당 방법 밖에 없음
 a = 100
 a = 99
+
+my_dict = {
+    'a1' : {'b1':1, 'b2':2, 'b3':3},
+    'a2' : {'b1':4, 'b2':5, 'b3':6},
+    'a3' : {'b1':7, 'b2':8, 'b3':9},
+}
+print(my_dict['a3']['b2']) # 8
+print(my_dict.get('a3').get('b2'))
