@@ -366,7 +366,7 @@ a : 변수
 양의 무한대 : float('inf')
 음의 무한대 : float('-inf')
 
-**ctrl + 매서드 클릭하면 해당 매서드의 설명 볼 수 있음**
+**ctrl + 메서드 클릭하면 해당 매서드의 설명 볼 수 있음**
 
 지수를 사용
 예 : 3.14 = 314e-2
@@ -398,7 +398,7 @@ a : 변수
 - .format매서드
 - f-string
 
-``` 
+``` python
 name = input()
 age = int(input())
 height = float(input())
@@ -415,7 +415,7 @@ print(f'저의 이름은 {name}이고, 나이는 {age}세, 키는{height:.2f}cm 
 
 
 
-```
+```python
 bugs = 'roaches'
 counts = 13
 area = 'living room'
@@ -427,7 +427,7 @@ print(f'Debugging {bugs} {counts} {area}')
 #### 문자열 시퀀스 특징
 문자열 -> 하나의 문자가 아니라, 다섯개의 문자가 순서대로 나열된 것
 
-```
+```python
 my_str = 'hello'
 
 # 인덱싱
@@ -465,7 +465,7 @@ print(len(my_str)) # 5
 #### 변경 불가능한 문자열
 문자열 값을 변경하는 시도를 하면 오류 뜸
 
-```
+```python
 my_str = 'hello'
 
 my_str[1] = 'z'
@@ -527,7 +527,7 @@ Python Tutor
 
 ***리스트 요소로 있는 리스트 안의 시퀀스도 인덱싱할 수 있음***
 
-```
+```python
 # 중첩된 리스트
 my_list = [1, 2, 3, ['python', 'hello', 100]]
 print(len(my_list))
@@ -555,7 +555,7 @@ print(my_list) # [100, 2, 3]
 - 튜플은 불변 특성을 사용해서 안전하게 여러개의 값을 전달, 그룹화, 다중할당 등에 주로 사용 ==> 파이썬 내부동작에 주로 사용되며 개발자가 직접 사용할 일은 잘 없음.
 - 알고리즘 시 방향 배열할 때 종종 사용
 
-```
+```python
 x, y = (10, 20)
 
 print(x)
@@ -566,7 +566,7 @@ x, y = 10, 20
 ```
 
 방향 배열 활용 시
-```
+```python
 상하좌우 표현
 dy = [-1, 1, 0, 0]
 dx = [0, 0, 1, -1]
@@ -595,7 +595,7 @@ directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 - 증가 값이 음수이면 시작 값 > 끝 값
 - 증가 값이 양수이면 시작 값 < 끝 값
 
-```
+```python
 my_range_1 = range(5)
 my_range_2 = range(1, 10)
 
@@ -623,7 +623,7 @@ print(my_range_2)  # range(1, 10)
 
 #### 예제 : 중첩된 딕셔너리
 
-```
+```python
 my_dict = {
     'a1' : {'b1':1, 'b2':2, 'b3':3},
     'a2' : {'b1':4, 'b2':5, 'b3':6},
@@ -654,7 +654,7 @@ print(my_dict.get('a3').get('b2'))
 - 수학에서의 집합과 동일한 연산 처리 가능
 - 순서와 중복 x ==> 리스트의 중복 값 처리할 때 사용할 수 있으나, 순서는 다시 맞추어야 함
 
-```
+```python
 my_set_1 = set() # 빈 set 만들기
 my_set_2 = {1, 2, 3}
 my_set_3 = {1, 1, 1}
@@ -671,7 +671,7 @@ print(my_set_1 & my_set_2)  # {3}
 ```
 
 #### 예시 : 로또 번호 6개 선택 코드
-```
+```python
 import random
 
 lotto_set = set()
@@ -693,7 +693,7 @@ print(sorted(lotto_list))
 - **비어있다는 뜻이 아님**
 - 변수를 할당 했는데, 현재는 값이 없을 때 사용
 
-```
+```python
 variable = None
 print(variable)  # None
 ```
@@ -705,7 +705,7 @@ boolean : 참(True)과 거짓(False)을 표현하는 자료형
 - 비교 / 논리 연산의 평가 결과로 사용
 - 조건 / 반복문과 주로 사용
 
-```
+```python
 bool_1 = True
 bool_2 = False
 print(bool_1)  # True
@@ -721,7 +721,7 @@ print('3' != 3)  # True
 
 
 ### 불변과 가변의 차이
-```
+```python
 # mutable (가변)
 my_list = [1, 2, 3]
 my_list[0] = 100
@@ -743,7 +743,7 @@ my_str[0] ='z'
 #### 예시
 - 정수와 실수의 연산에서 정수가 실수로 변환
 - Boolean과 Numeric Type에서만 가능
-```
+```python
 print(3 + 5.0) # 8.0
 print(True + 3) # 4
 print(True + False) # 1
@@ -756,7 +756,7 @@ print(True + False) # 1
 #### 예시
 - str -> int / float : 형식에 맞는 숫자만 가능
    ***(소수 int 하면 소수점 버림)***
-```
+```python
 print(int('1')) # 1
 print(int('3.5')) # ValueError
 print(int(3.5)) # 3
@@ -764,7 +764,7 @@ print(float('3.5')) # 3.5
 ```
 - int / float -> str : 형식에 상관없이 가능
 
-```
+```python
 print(str(1) + '등') # 1등
 ```
 
@@ -785,7 +785,7 @@ print(str(1) + '등') # 1등
 - 값을 비교하는 == 와 다름
 - None 이나 Boolean을 비교할 때 많이 씀
 
-```
+```python
 # 비교 연산자
 print(3 > 6)  # False
 print(2.0 == 2)  # True
@@ -811,7 +811,7 @@ print(2 == 2.0)  # True
 논리 연산에서 두 번째 피연산자를 평가하지 않고 결과를 결정하는 동작
 두 번째 연산과 상관없이 결과가 동일할 때 해당
 
-```
+```python
 # 단축 평가
 
 # 문자와 정수는 연산하는 방법이 다름
@@ -865,7 +865,7 @@ print(0 or 3) # 3
 ### 시퀀스형 연산자
 ![alt text](image-9.png)
 
-```
+```python
 # 시퀀스형 연산자
 
 print('Gildong' + ' Hong')  # Gildong Hong
@@ -880,7 +880,7 @@ print([1, 2] * 2)  # [1, 2, 1, 2]
 
 
 #### 복사 : 할당, 얕은 복사, 깊은 복사
-```
+```python
 # 1. 할당 : 원본 변경 x
 list1 = [1, 2, 3, 4, 5]
 list2 = list1
@@ -908,6 +908,610 @@ list2[2][0] = 5
 print(id(list1),id(list2))
 print(id(list1[2]),id(list2[2]))
 print(list1, list2)
+```
+
+# Python Functions
+
+## 개요 
+***함수 : 특정 작업을 수행하기 위한 재사용 가능한 코드 묶음***
+
+### 함수를 사용하는 이유
+- 코드 중복 방지
+- 재사용성을 높이고, 코드의 가독성과 유지보수성(디버깅->함수 출력에 breakpoint 걸면 함수 내부 디버깅 가능) 향상
+  ==> 반복문의 길이를 줄일 수 있음.
+  ==> 알고리즘 문제 풀이시 자주 사용하게 됨
+
+## 함수의 구조
+![alt text](image-12.png)
+
+```python
+# 함수 정의
+def greet(name): # 함수명(매개변수)
+    """입력된 이름(name) 값에
+    인사를 하는 메세지('Hello, ')를 만드는 함수
+    """        message = 'Hello, ' + name
+    return message
+# 함수 호출 및 반환 값 할당
+result = greet('Alice') # 함수명(함수인자)
+print(result)
+```
+
+### 함수의 정의
+- def 키워드로 시작
+- 함수 이름 작성
+- ()안에 매개변수(parameter) 정의 -> 함수에 전달되는 값
+
+### 함수 body
+- ":" 다음에 들여쓰기 된 코드 블록
+- 함수가 실행될 때 수행되는 코드
+
+### Docstring
+- body 앞에 선택적으로 작성 가능한 함수에 대한 설명법, 가이드
+
+### 함수 반환 값
+- 필요한 경우 결과 반환
+- return 반환할 값
+- return 문은 함수의 실행을 종료하고 결과를 호출
+
+  (안 붙이더라도 자동으로 return None을 붙여 줌 => 무조건 값이 반환됨)
+
+***print의 Return 은?***
+- Print는 Return이 None임
+- -> print는 출력을 하는 거지 값을 반환을 하는 게 아님
+- Return과 출력은 다름
+
+```python
+def make_sum(pram1, pram2):
+    """이것은 두 수를 받아
+    두 수의 합을 반환하는 함수입니다.
+    >>> make_sum(1, 2)
+    3
+    """
+    return pram1 + pram2
 
 
+result = make_sum(100, 30)
+print(result) # 130
+
+return_value = print(result)
+print(return_value) # None
+```
+
+```python
+def my_func() :
+    print('hello')
+
+result = my_func()
+print(result)
+
+# 출력값
+# hello
+# None  # my_func을 출력하기 때문에 None
+```
+
+### 함수 호출(Function Call)
+- 함수를 실행하기 위해 함수의 이름을 사용하여 함수의 코드 블록을 실행하는 것
+- 이름과 ()을 통해 호출
+- 필요한 경우 인자(argument) 전달 필요
+- 전달된 argument는 parameter에 대입
+
+## 함수의 유형
+
+매개 변수의 유무, 반환 값의 유무에 따라 총 4가지의 경우가 생김
+
+## 매개변수와 인자
+
+- 매개변수(parameter) : 함수를 "정의"할 때, 함수가 받을 값을 나타내는 변수
+  
+  위치에 대한 이름일 뿐, 기능을 하지는 않음
+- 인자(argument) : 함수를 "호출"할 때, 실제로 전달되는 값
+
+```python
+def add_numbers(x, y): #매개변수
+	result = x + y
+	return result
+
+
+a = 2
+b = 3
+sum_result = add_numbers(a, b) #인자 
+print(sum_result)
+```
+
+### 인자의 종류
+
+#### 1. 위치 인자(Positional Arguements)
+
+- 위치 인자 : 함수 호출 시 인자의 위치에 따라 전달되는 인자
+
+  ***위치 인자는 함수 호출 시 반드시 값을 전달해야 함***
+
+```python
+def greet(name, age):
+    print(f'안녕하세요, {name}님! {age}살이시군요.')
+
+greet('Alice', 25) #안녕하세요, Alice님! 25살이시군요.
+greet(25, 'Alice') #안녕하세요, 25님! Alice살이시군요.
+# 동작에는 전혀 영향 없음, 잘 사용하려면 Docstring이 필요
+greet('Alice') #TypeError: greet() missing 1 required positional argument: 'age'
+```
+
+#### 2. 기본 인자 값(Default Arguement Values)
+- 함수 정의에서 parameter에 기본 값을 할당하는 것
+- 함수 호출시 인자를 전달하지 않으면, 기본값이 매개변수에 할당
+  
+  (전달하면 그 값으로 반영)
+
+```python
+def greet(name, age = 30):
+    print(f'안녕하세요, {name}님! {age}살이시군요')
+
+greet('Bob') #안녕하세요, Bob님! 30살이시군요
+greet('Charlie', 40) #안녕하세요, Charlie님! 40살이시군요
+```
+
+#### 3. 키워드 인자(Keword Arguements)
+- 함수 호출 인자의 이름과 함께 값을 전달 하는 인자
+- 매개변수와 인자를 일치시키지 않고, 특정 매개변수에 값을 할당할 수 있음
+- 인자의 순서는 중요하지 않으며, 인자의 이름을 명시하여 전달
+  
+  ***단, 호출 시 키워드 인자는 위치 인자 뒤에 위치해야 함.***
+
+```python
+def greet(name, age):
+    print(f'안녕하세요, {name}님! {age}살이시군요')
+
+greet(name = 'Dave', age = 35) #안녕하세요, Dave님! 35살이시군요
+greet(age = 35, name = 'Dave') #안녕하세요, Dave님! 35살이시군요
+greet(age = 35, 'Dave') # positional argument follows keyword argument
+# 첫 위치에서 age 칸을 소진했기 때문에, 'Dave' 인자가 들어갈 공간이 없음
+```
+
+#### 4. 임의의 인자 목록(Arbitrary Arguements List)
+- 정해지지 않은 개수의 인자를 처리하는 인자
+- 함수 정의시 *매개변수* 앞에 "\*"를 붙여 사용, 여러개의 인자를 *tuple*로 처리
+
+```python
+def calculate_sum(*args): #임의의 인자 사용시 args(arguments) 관습적 사용
+    print(args)
+    print(type(args)) # <class 'tuple'>
+
+calculate_sum(1, 100, 5000, 30) #(1, 100, 5000, 30)
+
+def calculate_sum(prams,*args): #임의의 인자 사용시 args(arguments) 관습적 사용
+    print(args)
+    print(type(args)) # <class 'tuple'>
+## 위치 인자는 임의 인자 뒤에 올 수 없음.
+## 앞에 위치인자가 오면 그 개수만큼 인자를 들고 감
+
+calculate_sum(1, 100, 5000, 30) #(100, 5000, 30)
+```
+
+#### 5. 임의의 키워드 인자 목록(Arbitrary Keyword Arguements List)
+- 정해지지 않은 개수의 키워드 인자를 처리
+- 함수 정의 시 매개변수 앞에 "**"를 붙여 사용
+- 여러 개의 인자를 dictionary로 묶어 처리
+
+```python
+def print_info(**kwargs):
+    print(kwargs)
+
+print_info(name = 'Eve', age = 30) # {'name': 'Eve', 'age': 30}
+```
+
+#### 함수 인자 권장 작성 순서
+- 위치 -> 기본 -> 가변 -> 가변 키워드
+- 호출 시 인자를 전달하는 과정에서 혼란을 줄일 수 있음
+
+  ***모든 상황에 적용되는 절대적인 규칙은 아님***
+```python
+def func(pos1, pos2, default_arg='default', *args, **kwargs):
+    print('pos1:', pos1)
+    print('pos2:', pos2)
+    print('default_arg:', default_arg)
+    print('args:', args)
+    print('kwargs:', kwargs)
+
+
+func(1, 2, 3, 4, 5, 6, key1='value1', key2='value2')
+#{'name': 'Eve', 'age': 30}
+#pos1: 1
+#pos2: 2
+#default_arg: 3
+#args: (4, 5, 6)
+#kwargs: {'key1': 'value1', 'key2': 'value2'}
+```
+
+## 재귀 함수(Recursion Function)
+
+재귀 함수 : 함수 내부에서 자기 자신을 호출하는 함수
+
+#### 주요 예시 : 팩토리얼(피보나치도 가능)
+- factorial 함수는 자신을 재귀적으로 호출하여 입력된 숫자 n의 팩토리얼을 계산
+- 재귀 호출은 n이 0이 될 때까지 반복, 종료 조건(Base case)을 설정하여 재귀 호출 멈춤
+- 재귀 호출의 결과를 이용하여 문제를 작은 단위의 문제로 분할,
+  
+  분할된 문제들의 결과를 조합하여 최종 결과 도출
+
+
+```python
+def factorial(n):
+    # 종료 조건: n이 0이면 1을 반환
+    if n == 0:
+        return 1
+    else:
+        # 재귀 호출: n과 n-1의 팩토리얼을 곱한 결과를 반환
+        return n * factorial(n - 1)
+
+print(factorial(5))  # 120
+```
+
+### 재귀 함수의 특징
+- 자기 자신을 호출(재귀 호출)
+- 특정 알고리즘 식을 표현할 때 변수 사용이 줄어들고, 코드 가독성이 높아짐
+  
+  *반드시 그렇진 않음*
+- 1개 이상의 base case(기저 조건, 종료 조건)가 존재하고 수렴하도록 작성
+- 종료 조건을 명확하게 하고, 반복되는 호출이 종료 조건(기저 조건)을 향하도록 해야 함. -> 무한 호출 주의
+
+### 재귀 함수를 사용하는 이유
+- 문제의 자연스러운 표현 : 복잡한 문제를 간결하고 직관적으로 표현 가능
+- 코드 간결성
+- 수학적 문제 해결
+
+## 내장 함수(Built-in function)
+
+내장 함수 : 파이썬이 기본적으로 제공하는 함수(별도 import 불필요)
+** 참고(파이썬 공식문서) : https://docs.python.org/ko/3.9/library/functions.html
+
+내장 함수와 메서드 차이
+- 내장함수는 별도의 import 없이 사용 가능
+- 메서드는 클래스 내부에 정의된 함수(객체를 통해 호출)
+
+```python
+# 내장함수 예시
+len(list)
+max(list)
+min(list)
+sum(int)
+sorted(list, reverse = True)
+
+# 메서드 예시
+list.append()
+str.upper()
+dict.keys()
+```
+### map 함수
+
+- 함수 구조 : map(function, iterable)
+- iterable : 반복 가능한 객체(요소), 순회 가능한 데이터구조(예 : collection 등)
+- iterable의 모든 요소에 함수를 적용하고, 그 결과를 map object로 반환
+- 첫 위치인자가 함수이므로 적용할 수 있는 case가 무궁무진
+
+```python
+numbers = [1, 2, 3]
+result = map(str, numbers)
+
+print(result)  # <map object at 0x00000239C915D760>
+print(list(result))  # ['1', '2', '3']
+
+# 문자열 '1 2 3'이 입력되었을 때
+numbers1 = input().split() #input -> 문자열 상태 / split -> 리스트로 바꿔줌
+print(numbers1)  # ['1', '2', '3'] #문자열 상태
+
+numbers2 = map(int, input().split())
+print(type(numbers2)) # <class 'map'>
+print(numbers2)  # <map object at 0x000001AD56592F40>
+
+numbers2 = list(map(int, input().split())) 
+print(numbers2)  # [1, 2, 3] # 위 리스트 요소에 모두 int 함수 실행
+#list를 해야하는 이유는 map을 쓰면 map object가 되기 때문
+```
+
+### zip 함수
+
+- 함수 구조 : zip(*iterables)
+- 임의의 iterable을 모아 튜플을 원소로 하는 zip object를 반환
+- 여러 개의 리스트를 동시에 조회할 때 활용
+- 2차원 리스트(행렬)의 같은 컬럼(열) 요소를 동시에 조회할 때
+
+```python
+girls = ['jane', 'ashley']
+boys = ['peter', 'jay']
+pair = zip(girls, boys)
+print(pair)  # <zip object at 0x000001C76DE58700>
+print(list(pair))  # [('jane', 'peter'), ('ashley', 'jay')]
+
+kr_scores = [10, 20, 30, 50]
+math_scores = [20, 40, 50, 70]
+en_scores = [40, 20, 30, 50]
+
+for student_scores in zip(kr_scores, math_scores, en_scores):
+    print(student_scores)
+
+```
+
+## 함수와 Scope
+
+#### Python의 범위(scope)
+- 함수는 코드 내부에 local space를 생성하며, 그 외 공간인 global space로 구분
+
+### 범위와 변수 관계
+
+#### scope
+- global scope : 코드 어디에서든 참조할 수 있는 공간
+- local scope : 함수가 만든 scope(함수 내부에서만 참조 가능)
+
+#### variable
+- global variable : global scope에 정의된 변수
+- local variable : local scope에 정의된 변수
+
+```python
+#예시
+
+def func():
+  num = 20
+  print('local',num) # local 20
+
+func() 
+
+print('global', num ) # name 'num' is not defined
+
+##num은 local scope에 존재해서 global scope에서 사용 불가
+```
+
+### 변수 수명주기(lifecycle)
+
+변수의 수명 주기는 변수가 선언되는 위치와 scope에 따라 결정됨
+1. built-in scope : 파이썬이 실행된 이후부터 영원히 유지
+2. global scope : 모듈이 호출된 시점 이후 혹은 인터프리터가 끝날 때까지 유지
+3. local : 함수가 호출될 때 생성, 함수가 종료될 때까지 유지
+
+### 이름 검색 규칙(Name Resolution) - LEGB Rule
+![alt text](image-13.png)
+- 파이썬에서 사용되는 이름(식별자)들은 특정한 이름공간(namespace)에 저장되어 있음
+- 같은 순서로 이름을 찾아나감(LEGB Rule)
+  1. Local Scope : 지역 범위(현재 작업 중인 범위)
+  2. Enclosed Scope : 노출 스코프, 지역 범위 한 단계 위 범위
+  3. Global Scope : 최상단에 위치한 범위
+  4. Built-in Scope : 모든 것을 담고 있는 범위(정의하지 않고 사용할 수 있는 모든 것)
+- 함수 내에서는 바깥 scope의 변수에 접근 가능하나 수정은 할 수 없음
+
+#### LEGB Rule 예시
+
+```python
+print(sum) # <built-in function sum>
+print(sum(range(3))) # 3
+
+sum = 5
+
+print(sum) # 5
+print(sum(range(3))) # TypeError: 'int' object is not callable
+
+# sum이라는 이름을 global에서 활용하면서 built-in 함수를 활용하지 못하게 됨
+# LEGB Rule에 따라 global에서 먼저 찾기 때문
+# 그럴 경우 sum 변수 객체 삭제를 위해 del sum 입력 후 진행
+```
+
+```python
+a = 1 # Global Scope
+b = 2
+
+def enclosed(): # Enclosed Scope
+    a = 10
+    c = 3
+
+    def local(c): # Local Scope
+        # inner_function에서 a, c에 접근할 때,
+        # 우리는 enclosed scope에 있는 a, c에 접근한다
+        print(a, b, c)  # 10 2 500
+
+    local(500)
+    print(a, b, c)  # 10 2 3
+
+
+enclosed()
+
+print(a, b)  # 1 2
+```
+
+```python
+a, b, c = 1, 2, 3
+
+def enclosed():
+    # global 키워드를 사용하면 전역 범위와 공유
+    global a, b, c
+    a, b, c = 4, 5, 6
+
+    def local(c):
+        print(a, b, c) # 4 5 500
+
+    local(500)
+    print(a, b, c) # 4 5 6
+
+enclosed()
+print(a, b, c) # 4 5 6
+
+```
+
+
+### 'global' 키워드
+
+- 변수의 scope를 전역 범위로 지정하기 위해 사용
+- 일반적으로 함수 내에서 전역 변수를 수정하려는 경우 사용
+- global 키워드 선언 전에 참조 불가
+- 매개 변수 키워드 사용 불가
+
+```python
+num = 0 # global variables
+
+def increment():
+    global num  # local num를 전역 변수로 선언
+    num += 1
+
+
+print(num)  # 0
+increment()
+print(num)  # 1
+```
+
+```python
+# 주의 사항 : 키워드 선언 전엔 참조 불가
+num = 0 # global variables
+
+def increment():
+    # SyntaxError: name 'num' is used prior to global declaration
+    print(num)
+    global num  # local num를 전역 변수로 선언
+    num += 1
+
+
+# 매개변수에 global 키워드 사용 불가
+num = 0 # global variables
+
+def increment(num):
+    # SyntaxError: name 'num' is parameter and global
+    global num  # local num를 전역 변수로 선언
+    num += 1
+```
+
+## Packing & Unpacking
+
+### Packing
+
+- Packing : 여러 개의 값을 하나의 변수에 시퀀스로 묶는 과정
+- 변수에 담긴 값들은 하나의 튜플(tuple) 형태로 묶임
+
+```python
+packed_values = 1, 2, 3, 4, 5
+print(packed_values) # (1, 2, 3, 4, 5)
+
+```
+
+#### "*"을 활용한 패킹
+
+```python
+numbers = [1, 2, 3, 4, 5]
+a, *b, c = numbers
+
+print(a)  # 1
+print(b)  # [2, 3, 4]
+# 남은 요소들을 리스트로 패킹하여 할당
+print(c)  # 5
+
+
+numbers = [1, 2, 3, 4, 5]
+a, b, *c, d, e = numbers
+
+print(a)  # 1
+print(b)  # 2
+print(c)  # [3]
+# 남은 값이 하나여도 리스트로 할당
+print(d)  # 4
+print(e)  # 5
+```
+
+#### print 함수 분석
+- 임의의 가변 인자를 작성할 수 있었던 이유
+  => 인자 개수에 상관 없이 튜플 하나로 패킹되어 내부에서 처리됨.
+```python
+def my_func(*objects) :
+    print(objects)
+    print(type(objects))
+
+my_func(1, 2, 3, 4, 5)
+# (1, 2, 3, 4, 5)
+# <class 'tuple'>
+
+
+print('hello')
+print('you', 'need', 'python', sep = "-") # you-need-python
+print('hello', end = " ") # hello hi
+print('hi')
+```
+![alt text](image-14.png)
+
+
+### Unpacking
+
+Unpacking : 패킹된 변수의 값을 개별적인 변수로 분리하여 할당하는 것
+
+- 예시
+```python
+packed_values = 1, 2, 3, 4, 5
+
+# 언패킹
+a, b, c, d, e = packed_values
+print(a, b, c, d, e)  # 1 2 3 4 5
+```
+
+#### "*"를 활용한 언패킹
+"*"는 리스트의 요소를 언패킹하여 인자로 전달
+```python
+names = ["Kai", "Jane", "Bob"]
+print(*names) # Kai Jane Bob
+```
+
+#### "**"를 활용한 언패킹
+
+dictionary의 키-값 쌍을 언패킹하여 함수의 키워드 인자로 전달 
+- 함수 호출 시에만 가능
+- 매개변수와 인자의 key 값이 같아야 함
+
+```python
+def my_func(x, y, z):
+    print(x, y, z)
+
+dict_values = {'x' : 1, 'y' : 2, 'z' :3}
+my_func(**dict_values) # 1 2 3
+```
+
+## 람다 표현식(Lambda Expressions)
+
+- 익명 함수를 만드는 데 사용하는 표현식
+- 한 줄로 간단한 함수를 정의하는 기능
+
+### lambda 표현식 구조
+
+```python
+lambda 매개변수 : 표현식
+```
+- 매개변수 : 여러 개 매개변수가 있을 경우 쉼표 구분
+- 표현식 : 함수의 실행되는 코드 블록으로, 결과값을 반환(return)하는 표현식
+
+### lambda 함수 특징
+- 표현식 안에 return 값이 있어야 함
+- 명시성은 떨어짐
+- 일회성 활용할 때 주로 사용 -> 함수 이름을 정할 필요가 없음
+
+```python
+# 기존 함수 방법 활용
+def addition(x, y):
+    return x + y
+
+result = addition(3, 5)
+print(result) # 8
+
+# lambda 표현식으로 작성한 addition 함수
+addition = lambda x, y: x + y
+
+result = addition(3, 5)
+print(result) # 8
+```
+
+### map 함수를 활용한 lambda 함수
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+def square(x):
+    return x ** 2
+
+# lambda 미사용
+squared1 = list(map(square, numbers))
+print(squared1)
+
+# lambda 사용
+squared2 = list(map(lambda x : x**2, numbers))
+print(squared2)
 ```
