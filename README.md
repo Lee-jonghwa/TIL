@@ -2204,4 +2204,463 @@ print(result3)
 
    4. 결론
     - 성능 차이는 대부분의 경우 미미하므로, 
-      코드의 가독성과 유지보수성을 고려하여 상황에 맞는 적절한 방법을 선택하는 것을 권장
+      코드의 가독성과 유지보수성을 고려하여 상황에 맞는 적절한 방법을 선택하는 것을 
+      
+# Data Structure
+
+***자료 구조***
+- 각 데이터의 효율적인 저장, 관리를 위한 구조를 나눠 놓은 것
+![alt text](image-15.png)
+- 데이터 구조의 활용 : 문자열, 리스트, 딕셔너리 등 각 데이터 구조의 메서드를 호출하여 사용
+
+## Method(메서드)
+- 메서드: **객체에 속한** 함수(객체의 상태를 조작하거나 동작을 수행)
+
+### 메서드의 특징
+- 메서드는 클래스(class) 내부에 정의되는 "함수"
+- 클래스는 파이썬에서 "타입을 표현하는 방법"
+- 예 : help 함수로 str을 호출하면 class인 것을 확인 가능
+- 데이터 타입별로 다양한 기능을 가진 메서드가 존재
+
+### 메서드의 호출 방법
+```python
+# 데이터 타입 객체.메서드()
+'hello'.capitalize()
+
+# 문자열 메서드 예시
+print('hello'.capitalize()) # Hello
+
+# 리스트 메서드 예시
+numbers = [1, 2, 3]
+numbers.append(4)
+
+print(numbers) = [1, 2, 3, 4]
+```
+
+## Sequence Data Structure : stirng
+
+### 문자열 조회 / 탐색 및 검증 메서드
+
+![alt text](image-16.png)
+
+#### 1. .find(x)
+- x의 첫 번째 위치를 반환.
+- 없으면 -1을 반환
+```python
+text = 'banana'
+print(text.find('a')) # 1
+print(text.find('z')) # -1
+```
+
+#### 2. index(x)
+- x의 첫 번째 위치를 반환.
+- 없으면 오류 발생
+- try - except시 활용
+```python
+text = 'banana'
+print(text.index('a')) # 1
+print(text.index('z')) # ValueError: substring not found
+
+try:
+except ValueError:
+    print("문자를 찾을 수 없습니다")
+## if else와 유사, except는 오류 발생시 조건
+
+```
+
+#### 3. isupper()
+***is ~ 함수의 경우 반환값은 True / False**
+- 문자열이 모두 대문자로 이루어져있는지 여부 확인 (True/False)
+```python
+string1 = 'HELLO'
+string2 = 'Hello'
+print(string1.isupper()) # True
+print(string2.isupper()) # False
+```
+
+#### 4. islower()
+- 문자열이 모두 소문자로 이루어져있는지 여부 확인 (True/False)
+```python
+print(string1.islower()) # False
+print(string2.islower()) # False
+```
+
+#### 5. isalpha()
+- 문자열이 알파벳으로만 이루어져있는지 여부 확인 (True/False)
+- 단순 알파벳이 아닌 유니코드 상 Letter
+
+```python
+string1 = 'hello'
+string2 = '123heis'
+print(string1.isalpha()) # True
+print(string2.isalpha()) # False
+```
+
+
+### 문자열 조작 메서드 (새 문자열 반환)
+
+#### 1. .replace(old, new[,count])
+***[]로 표현된 것은 "선택인자"***
+- 바꿀 대상 글자를 새로운 글자로 바꿔서 반환
+```python
+text = 'Hello, world, world, world!'
+new_text = text.replace('world', 'Python')
+count_new_text = text.replace('world', 'Python', 1)
+print(text) # Hello, world, world, world!
+print(new_text) # Hello, Python, Python, Python!
+print(count_new_text) # Hello, Python, world, world! ==> count는 바꾸는 갯수
+```
+
+#### 2. .strip([chars])
+- 문자열의 시작과 끝에 있는 공백 혹은 특정 문자를 제거
+```python
+text = '  Hello, world!  '
+new_text = text.strip()
+print(text) #   Hello, world!
+print(new_text) # Hello, world!
+```
+
+#### 3. .split(sep=None, maxsplit=-1)
+- 공백이나 특정 문자를 기준으로 분리
+```python
+text = 'Hello, world!'
+words = text.split(',')
+words2 = text.split()
+print(words) # ['Hello', ' world!']
+# 공백을 지운 게 아니기 때문에 공백은 남아 있음
+print(words2) # ['Hello,', 'world!']
+# 공백을 기준으로 나뉨, ','는 살아 있음
+```
+
+#### 4. 'separator'.join(iterable)
+- 구분자(separator)로 iterable의 문자열을 연결한 "문자열"을 반환
+```python
+words = ['Hello', 'world!']
+text = '-'.join(words)
+print(text) # Hello-world!
+
+
+my_list = ['my', 'name', 'is', 'jonghwa']
+
+print(' '.join(my_list)) # my name is jonghwa
+print(*my_list) # my name is jonghwa
+```
+
+#### 5. capitalize
+- 가장 앞글자만 대문자로 변경
+- 앞 글자를 제외한 모든 글자 소문자로 변경
+
+#### 6. title()
+- 문자열 앞에 공백이 있으면 첫 글자는 대문자, 나머지는 소문자 변환
+
+#### 7. upper()
+- 문자열 전체 대문자로 변경
+
+#### 8. lower()
+- 문자열 전체 소문자로 변경
+
+#### 9. swapcase()
+- 문자열 전체 대<->소문자 변경
+
+```python
+# capitalize
+text = 'heLLo, woRld!'
+new_text1 = text.capitalize()
+print(new_text1) # Hello, world!
+
+# title
+new_text2 = text.title()
+print(new_text2) # Hello, World!
+
+# upper
+new_text3 = text.upper()
+print(new_text3) # HELLO, WORLD!
+
+# lower
+new_text4 = text.lower()
+print(new_text4) # hello, world!
+
+# swapcase
+new_text5 = text.swapcase()
+print(new_text5) # HEllO, WOrLD!
+```
+
+***참고 : 메서드는 이어서 사용 가능***
+
+```python
+text = 'heLLo, woRLd!'
+new_text = text.swapcase().replace('l', 'z')
+print(new_text) # HEzzO, WOrzD!
+```
+## Sequence Data Structure : list
+
+### 리스트 값 추가 및 삭제 메서드
+![alt text](image-17.png)
+
+#### 1. .append(x)
+- 리스트 마지막에 항목 x(항목 하나)를 추가
+- append는 인자를 하나만 받을 수 있음(,로 두 개를 넣을 수 없음)
+
+```python
+my_list = [1, 2, 3]
+my_list.append(4)
+print(my_list) # [1, 2, 3, 4]
+print(my_list.append(4)) # None
+# => append의 반환이 없다는 뜻(원본을 이미 바꿨기 때문에 반환이 필요 없음)
+```
+
+#### 2. .extend(m)
+- iterable 'm'에 있는 모든 항목들을 리스트 끝에 추가('+='와 같음)
+- iterable을 풀어냄(리스트 시 리스트 전체가 하나의 요소로 들어가지 않음)
+- extend는 인자를 하나만 받을 수 있음(,로 두 개를 넣을 수 없음)
+
+```python
+my_list = [1, 2, 3]
+my_list.extend([4, 5, 6])
+print(my_list) # [1, 2, 3, 4, 5, 6]
+
+my_list.extend(5)
+print(my_list) # TypeError: 'int' object is not iterable
+## int와 같은 iterable이 아닌 요소는 넣을 수 없음
+
+my_list.append([9, 9, 9])
+print(my_list) # [1, 2, 3, 4, 5, 6, [9, 9, 9]]
+## 리스트를 통째로 넣을 땐 append 사용
+```
+
+
+#### 3. .insert(i,x)
+- 리스트 인덱스 i에 항목 x를 삽입
+
+```python
+my_list = [1, 2, 3]
+my_list.insert(1, 5)
+print(my_list)  # [1, 5, 2, 3]
+```
+
+#### 4. .remove(x)
+- 리스트 가장 왼쪽에 있는 항목의 첫 번째 x를 제거
+- 항목이 존재하지 않을 경우 ValueError
+```python
+my_list = [1, 2, 3, 2, 2, 2]
+my_list.remove(2)
+print(my_list) # [1, 3, 2, 2, 2]
+```
+
+#### 5. .pop()
+- 리스트 가장 오른쪽에 있는 항목(마지막)을 반환 후 제거
+- 인자를 입력시 해당 인덱스에 있는 항목을 반환 후 제거
+```python
+my_list = [1, 2, 3, 4, 5]
+item1 = my_list.pop()
+item2 = my_list.pop(0)
+
+print(item1) # 5
+print(item2) # 1
+print(my_list) # [2, 3, 4]
+
+
+
+queue = [1, 2, 3, 4, 5]
+first_element = queue.pop(0)
+print(first_element) # 1 
+## pop(x) 는 알고리즘 문제 풀 때 사용X
+## 시간복잡도의 문제 --> 첫 x+1 번째 요소를 제거하고 나머지 요소를 한 칸씩 인덱스를 앞으로 당김
+## 시간복잡도가 O(n) --> 시간 초과 발생
+
+
+#해결시 덱 모듈 사용
+from collections import deque
+queue = deque([1, 2, 3, 4, 5])
+first_element = queue.popleft()
+print(first_element) # 1
+# 시간복잡도가 O(1)
+```
+
+#### 6. .clear
+- 리스트의 모든 항목 삭제
+```python
+my_list = [1, 2, 3]
+my_list.clear()
+
+print(my_list) # []
+```
+
+### 리스트 탐색 및 정렬 메서드
+![alt text](image-18.png)
+
+#### 1. .index(x)
+- 리스트에서 첫 번째로 일치하는 항목 x의 인덱스를 반환
+
+```python
+my_list = [1, 2, 3]
+index = my_list.index(2)
+print(index) # 1
+```
+
+#### 2. .count(x)
+- 리스트에서 항목 x의 개수를 반환
+```python
+my_list = [1, 2, 2, 3, 3, 3]
+counting_number = my_list.count(3)
+print(counting_number) # 3
+```
+
+#### 3. .reverse()
+- 리스트의 순서를 역순으로 변경(정렬 X)
+```python
+my_list = [1, 3, 2, 8, 1, 9]
+my_list.reverse()
+print(my_list) # [9, 1, 8, 2, 3, 1]
+print(my_list.reverse()) # None
+```
+
+#### 4. .sort()
+- 원본 리스트를 오름차순/내림차순으로 정렬
+```python
+# sort
+my_list = [3, 2, 100, 1]
+my_list.sort()
+print(my_list) # [1, 2, 3, 100]
+
+# sort(내림차순 정렬)
+my_list.sort(reverse=True)
+print(my_list) # [100, 3, 2, 1]
+
+
+### sort와 sorted 차이
+
+numbers = [3, 1, 4, 1, 5, 9, 2]
+numbers.sort()
+print(numbers) # [1, 1, 2, 3, 4, 5, 9]
+numbers.sort(reverse= True)
+print(numbers) # [9, 5, 4, 3, 2, 1, 1]
+
+numbers = [3, 1, 4, 1, 5, 9, 2]
+sorted_numbers1 = sorted(numbers)
+print(sorted_numbers1) # [1, 1, 2, 3, 4, 5, 9]
+sorted_numbers2 = sorted(numbers, reverse=True)
+print(sorted_numbers2) # [9, 5, 4, 3, 2, 1, 1]
+
+
+# 차이 1 : sort는 원본 변경 O, sorted는 원본 변경 X
+# 차이 2 : sort는 반환값 X, sorted는 반환값 O
+
+
+```
+
+## 데이터 타입과 복사
+- 데이터의 분류에 따라 복사 방법이 다름
+- "변경 가능한 데이터 타입"과 "변경 불가능한 데이터 타입"을 나누어 확인 필요
+
+### 1. 할당
+- 리스트 할당 연산자(=) 활용시 복사는 해당 객체에 대한 객체 참조를 복사
+1) 가변
+```python
+a = [1, 2, 3, 4]
+b = a # b가 a의 주소를 받음
+b[0] = 100
+
+print(a) # [100, 2, 3, 4]
+print(b) # [100, 2, 3, 4]
+
+## --> 값이 복사된 것이 주소가 복사가 됨 --> 할당
+```
+
+2) 불변
+
+```python
+a = 20
+b = a
+b = 10 # 불변한 값이기 때문에, 같은 주소에 다른 값을 둘 수 없음.
+
+print(a) # 20
+print(b) # 10
+```
+
+### 2. 얕은 복사
+- 복사한 객체의 값을 변경하는 것은 원본에 영향을 미치지 않음
+
+```python
+a = [1, 2, 3]
+b = a[:] # 슬라이싱은 새로운 리스트를 반환
+c = a.copy()
+
+print(a, b, c) # [1, 2, 3] [1, 2, 3] [1, 2, 3]
+
+b[0] = 100
+c[0] = 999
+print(a, b, c) # [1, 2, 3] [100, 2, 3] [999, 2, 3]
+```
+
+***얕은 복사의 한계***
+- 슬라이싱으로 생성된 객체는 원본 객체와 독립적 존재
+- 내부 객체의 주소는 같기 때문에 리스트 내 리스트는 함께 변경됨
+```python
+a = [1, 2, [3, 4, 5]]
+b = a[:]
+b[2][1] = 100
+print(a) # [1, 2, [3, 100, 5]]
+print(b) # [1, 2, [3, 100, 5]]
+
+
+b[0] = 999
+print(a) # [1, 2, [3, 100, 5]]
+print(b) # [999, 2, [3, 100, 5]]
+```
+
+### 3. 깊은 복사
+- 중첩된 리스트 순회 시 원본 조작하고 싶지 않을 때 사용
+- 전체 객체가 다른 주소를 활용하여 독립적으로 존재
+
+```python
+import copy
+a = [1, 2, [3, 4, 5]]
+b = copy.deepcopy(a)
+
+b[2][1] = 100
+
+print(a)
+print(b)
+```
+
+## 문자 유형 판별 메서드
+![alt text](image-19.png)
+### 1. isdecimal()
+- 문자열이 모두 숫자 문자로만 이루어져 있어야 True
+### 2. isdigit()
+- 유니코드 숫자도 인식
+- 예 : ①도 인식
+### 3. isnumeric()
+- 추가적인 유니코드 인식(분수, 지수, 루트 등)
+
+```python
+# isdecimal() : 가장 엄격한 기준을 적용, 오직 일반적인 십진수 숫자(0-9)만 True로 인식
+print("isdecimal() 메서드 예시:")
+print("'12345'.isdecimal():", '12345'.isdecimal()) # True
+print("'123.45'.isdecimal():", '123.45'.isdecimal()) # False
+print("'-123'.isdecimal():", '-123'.isdecimal()) #False
+print("'Ⅳ'.isdecimal():", 'Ⅳ'.isdecimal()) # False
+print("'½'.isdecimal():", '½'.isdecimal()) # False
+print("'²'.isdecimal():", '²'.isdecimal()) # False
+print()
+
+# isdigit() : 일반 숫자뿐만 아니라 지수 표현(²)도 True로 인식
+print("isdigit() 메서드 예시:")
+print("'12345'.isdigit():", '12345'.isdigit()) # True
+print("'123.45'.isdigit():", '123.45'.isdigit()) # False
+print("'-123'.isdigit():", '-123'.isdigit()) # False
+print("'Ⅳ'.isdigit():", 'Ⅳ'.isdigit()) # False
+print("'½'.isdigit():", '½'.isdigit()) # False
+print("'²'.isdigit():", '²'.isdigit()) # True
+print()
+
+# isnumeric() : 일반 숫자, 로마 숫자, 분수, 지수 등 다양한 형태의 숫자 표현을 True로 인식
+print("isnumeric() 메서드 예시:")
+print("'12345'.isnumeric():", '12345'.isnumeric()) # True
+print("'123.45'.isnumeric():", '123.45'.isnumeric()) # False
+print("'-123'.isnumeric():", '-123'.isnumeric()) #False
+print("'Ⅳ'.isnumeric():", 'Ⅳ'.isnumeric()) # True
+print("'½'.isnumeric():", '½'.isnumeric()) # True
+print("'²'.isnumeric():", '²'.isnumeric()) # True
+```
