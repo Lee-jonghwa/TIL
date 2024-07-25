@@ -3055,7 +3055,7 @@ my_dict = {{3, 2}: 'a'}
 
 #### 클래스와 객체의 비교
 ```python
-name = 'Alice"
+name = 'Alice'
 
 print(type(name)) # <class 'str'>
 ```
@@ -3115,7 +3115,7 @@ class Person:
 
 # 실제로 행동하는 건 class가 아닌 인스턴스(클래스는 blueprint!)
 
-# 인스턴스 생성
+# 인스턴스(객체) 생성
 singer1 = Person('iu')
 # 생성될 때부터 person으로 클래스 정의
 
@@ -3137,6 +3137,7 @@ print(singer1.name) # iu
 - 객체를 생성할 때 "자동으로 호출되는" 메서드
 - __init__이라는 이름의 메서드로 정의, 객체의 초기화 담당
 - 인스턴스를 생성하고 필요한 초기값을 설정
+
 #### 2. 인스턴스 변수
 - 인스턴스(객체)마다 별도로 유지되는 변수
 - 인스턴스마다 독립적인 값을 가지며, 인스턴스가 생성될 때마다 초기화됨
@@ -3258,6 +3259,10 @@ person1.greeting() # 안녕하세요. 지민입니다.
 ### 3. 클래스 메서드
 - 클래스가 호출하는 메서드
 - 클래스 변수를 조작하거나 클래스 레벨의 동작을 수행
+- cls 매개 변수를 통해 클래스 자체에 접근
+- 인스턴스의 상태를 변경하지 않음
+- -> 특정 인스턴스에 종속되지 않고, 클래스 레벨의 작업을 수행
+- => 인스턴스에 종속되지 않는 기능을 구현할 때 사용
 
 #### 클래스 메서드 구조
 - @classmethod 데코레이터를 사용하여 정의
@@ -3277,6 +3282,8 @@ class MyClass:
 ### 4. Static method(정적 메서드)
 - 클래스, 인스턴스와 상관없이 독립적으로 동작하는 메서드
 - 주로 클래스와 관련 있지만 인스턴스와는 상호작용 불필요
+- 클래스 내부에 선언되지만 클래스 변수에 접근하지 않는다.
+- 단순히 입력값에 대해서만 연산 실시 가능
 
 
 #### 정적 메서드 구조
@@ -3416,3 +3423,495 @@ my_function()
 함수 실행 후
 """
 ```
+
+## Inheritance(상속)
+기존 클래스의 속성과 메서드를 물려받아, 새로운 하위 클래스를 생성하는 것
+
+### 상속이 필요한 이유
+#### 1. 코드 재사용
+- 기존 클래스의 속성과 메서드 재사용
+- 새로운 클래스 작성시 기존 클래스 기능 활용 가능
+
+#### 2. 계층 구조
+- 클래스들 간의 계층구조 형성 가능
+- 부모와 자식 클래스 간의 관계를 표현하고 더 구체적인 클래스 형성 가능
+
+#### 3. 유지 보수의 용이성
+- 기존 클래스의 수정이 필요한 경우 해당 클래스만 수정하면 됨
+- 코드의 일관성을 유지하여 수정이 필요한 범위를 최소화
+
+#### 상속 작성 흐름 예시
+
+```python
+# 상속 없는 경우 - 1
+## 교수와 학생을 구별 못 함
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def talk(self):
+        print(f'반갑습니다. {self.name}입니다.')
+
+s1 = Person('김학생', 23)
+s1.talk()  # 반갑습니다. 김학생입니다.
+
+p1 = Person('박교수', 59)
+p1.talk()  # 반갑습니다. 박교수입니다.
+
+
+# 상속 없는 경우 - 2
+## 구별하지만 중복된 코드가 많음
+class Professor:
+    def __init__(self, name, age, department):
+        self.name = name
+        self.age = age
+        self.department = department
+
+    def talk(self):  # 중복
+        print(f'반갑습니다. {self.name}입니다.')
+
+class Student:
+    def __init__(self, name, age, gpa):
+        self.name = name
+        self.age = age
+        self.gpa = gpa
+
+    def talk(self):  # 중복
+        print(f'반갑습니다. {self.name}입니다.')
+
+
+# 상속을 사용한 계층구조 변경
+## 겹치는 특징인 "사람"의 클래스로 코드 중복 감소
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def talk(self):  # 메서드 재사용
+        print(f'반갑습니다. {self.name}입니다.')
+
+
+class Professor(Person):
+    def __init__(self, name, age, department):
+        self.name = name
+        self.age = age
+        self.department = department
+
+
+class Student(Person):
+    def __init__(self, name, age, gpa):
+        self.name = name
+        self.age = age
+        self.gpa = gpa
+
+
+p1 = Professor('박교수', 49, '컴퓨터공학과')
+s1 = Student('김학생', 20, 3.5)
+
+# 부모 Person 클래스의 talk 메서드를 활용
+p1.talk()  # 반갑습니다. 박교수입니다.
+
+# 부모 Person 클래스의 talk 메서드를 활용
+s1.talk()  # 반갑습니다. 김학생입니다.
+```
+
+### Multiple Inheritance(다중 상속)
+- 둘 이상의 상위 클래스로부터 여러 행동이 특징 상속
+- 상속받은 모든 클래스의 요소를 활용 가능
+- 중복된 속성이나 메서드가 있는 경우 "상속 순서에 의해 결정"됨
+
+```python
+# 다중 상속 예시
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def greeting(self):
+        return f'안녕, {self.name}'
+
+
+class Mom(Person):
+    gene = 'XX'
+
+    def swim(self):
+        return '엄마가 수영'
+
+
+class Dad(Person):
+    gene = 'XY'
+
+    def walk(self):
+        return '아빠가 걷기'
+
+
+## 순서가 Dad -> Mom => 괄호 안의 순서가 상속 순서
+class FirstChild(Dad, Mom):
+    def swim(self):         #overriding
+        return '첫째가 수영'
+
+    def cry(self):
+        return '첫째가 응애'
+
+
+baby1 = FirstChild('아가')
+print(baby1.cry())  # 첫째가 응애
+print(baby1.swim())  # 첫째가 수영
+print(baby1.walk())  # 아빠가 걷기
+print(baby1.gene)  # XY
+```
+
+```python
+class A : pass
+class B(A) : pass
+class C(A) : pass
+class D(B, C) : pass
+
+print(D.mro())
+# <class '__main__.D'>, 
+# <class '__main__.B'>, 
+# <class '__main__.C'>, 
+# <class '__main__.A'>
+# <class 'object'>
+
+# 어떤 순서로 MRO 출력?
+
+# D - B - C - A - object
+
+```
+
+
+```python
+# 스마트폰 다중상속
+class Tool :
+    def __init__(self, name):
+        self.name = name # 도구의 이름 저장
+
+    def use(self):
+        print(f'{self.name} 사용') #도구 사용 메시지 출력
+
+class ElectronicDevice:
+    def __init__(self,power):
+        self.power = power # 전자기기 전원 정보 저장
+
+    def turn_on(self):
+        print(f'{self.power}volt 전원 켜기')
+
+class Smartphone(Tool, ElectronicDevice):
+    def __init__(self, name, power, os):
+        Tool.__init__(self, name) # Tool 클래스의 생성자 메서드 호출
+        ElectronicDevice.__init__(self, power) # ElectronicDevice 클래스의 생성자 메서드 호출
+        self.os = os
+
+    def run_app(self):
+        print(f'{self.os}에서 앱 실행')
+
+# 스마트폰 인스턴스 생성
+my_phone = Smartphone('Galaxy', 220, "Android")
+
+# 메서드 호출
+my_phone.use()
+my_phone.turn_on()
+my_phone.run_app()
+```
+
+#### The Diamond problem
+
+![alt text](image-29.png)
+
+- 두 클래스 B, C가 A에서 상속,
+D가 B, C 모두에서 상속 시 발생하는 모호함
+
+- B, C가 재정의한 메서드가 A에 있고, D가 정의하지 않았을 때 
+
+- D는 B의 메서드 중 어느 버전을 상속하는지,
+아니면 C의 메서드 버전을 상속하는지
+
+
+***파이썬에서는 MRO(Method Resolution Order)알고리즘 사용
+
+#### MRO(Method Resolution Order)
+- super() : 부모클래스 객체를 반환하는 내장함수
+          - 현재 클래스가 상속하는 모든 부모 클래스 중 다음에 호출될 메서드를 결정하여 자동 호출
+  - 단일 상속 구조 사용시
+    - 명시적으로 이름을 지정하지 않고 참조 가능, 코드 유지 관리 용이
+    - 클래스 이름이 변경되거나 부모 클래스가 교체 되어도 수정 적음
+  - 다중 상속 구조 사용시
+    - MRO를 따른 메서드 호출
+    - 복잡한 구조에서 발생할 수 있는 문제 방지
+
+```python
+# super 사용 전
+class Person:
+    def __init__(self, name, age, number, email):
+        self.name = name
+        self.age = age
+        self.number = number
+        self.email = email
+
+
+class Student(Person):
+    def __init__(self, name, age, number, email, student_id):
+        self.name = name
+        self.age = age
+        self.number = number
+        self.email = email
+        self.student_id = student_id
+
+
+
+# super 사용 예시 - 단일 상속
+class Person:
+    def __init__(self, name, age, number, email):
+        self.name = name
+        self.age = age
+        self.number = number
+        self.email = email
+
+class Student(Person):
+    def __init__(self, name, age, number, email,student_id, gpa):
+        super().__init__()
+        self.student_id = student_id
+        self.gpa = gpa
+
+# super 사용 예시 - 다중 상속
+class ParentA:
+    def __init__(self):
+        self.value_a = 'ParentA'
+
+    def show_value(self):
+        print(f'Value from ParentA: {self.value_a}')
+
+
+class ParentB:
+    def __init__(self):
+        self.value_b = 'ParentB'
+
+    def show_value(self):
+        print(f'Value from ParentB: {self.value_b}')
+        ## 해당 상황에서 ParentB의 메서드를 사용하려면
+        ## ParentB.show_value()를 사용해야 함.
+
+
+class Child(ParentA, ParentB):
+    def __init__(self):
+        super().__init__()
+        self.value_c = 'Child'
+    # 상속순으로가지만, 호출하는 클래스에 메서드가 없으면 다음으로 넘어감
+
+child1 = Child()
+print(child1.value_a) # ParentA
+print(child1.value_c) # Child
+print(child1.value_b) # AttributeError: 'Child' object has no attribute 'value_b'
+# value_b가 있으려면 Child 클래스에 ParentB.__init__()필요
+```
+
+- mro(): 해당 인스턴스의 클래스가 어떤 부모 클래스를 가지는지 확인하는 메서드
+        - 기존의 인스턴스 -> 클래스 순으로 이름 공간을 탐색하는 과정에서
+         상속 관계에 있으면 인스턴스 -> 자식 클래스 -> 부모 클래스로 확장
+        - 각 클래스에서 호출 순서를 보존(좌->우), 부모를 오직 한 번만 호출, 우선순위에 영향을 주지 않으면서 서브 클래스를 만드는 단조적인 구조 형성
+        - 프로그래밍 언어의 신뢰성 있고 확장성 있는 클래스 설계 도움
+        - 클래스 간의 메서드 호출 순서가 예측 가능하게 유지, 코드의 재사용성과 유지보수성이 향상
+
+
+```python
+
+class A:
+    def __init__(self):
+        print('A Constructor')
+
+
+class B(A):
+    def __init__(self):
+        super().__init__()
+        print('B Constructor')
+
+
+class C(A):
+    def __init__(self):
+        super().__init__()
+        print('C Constructor')
+
+
+class D(B, C):
+    def __init__(self):
+        super().__init__()
+        print('D Constructor')
+
+
+print(D.mro())  
+
+## 상속 순서
+# [<class '__main__.D'>,
+# <class '__main__.B'>, 
+# <class '__main__.C'>, 
+# <class '__main__.A'>, 
+# <class 'object'>]
+```
+
+# Error & Exception
+
+## 디버깅
+
+1) 버그
+- 소프트웨어에서 발생하는 오류 또는 결함
+- 프로그램의 예상된 동작과 실제 동작 사이의 불일치
+
+2) 디버깅
+- 소프트웨어에서 발생하는 버그를 찾아내고 수정하는 과정
+- 프로그램의 오작동 원인을 식별하여 수정하는 작업
+
+### 디버깅 방법
+- print 함수 활용
+- 개발환경에서 제공하는 기능 활용
+- Python tutor 활용
+
+## 에러
+
+1) Syntax Error
+   프로그램의 구문이 올바르지 않은 경우
+   - Invalid Syntax(문법 오류)
+   - assign to literal(잘못된 할당)
+   - EOL(End of Line) : 마무리 안 한 것
+   - EOF(End of File) : 요소를 안 넣은 것
+
+2) Exception(내장 예외; Built-in Exceptions)
+   프로그램 "실행 중"에 감지되는 에러
+   파이썬에서 이미 정의되어, 특정 예외 상황에 대한 처리를 위해 사용
+   - ZeroDivisionError
+   - NameError
+   - TypeError : 타입불일치, 인자 누락, 인자 초과, 인자 타입 불일치
+   - ValueError : 연산이나 함수는 문제 없지만 부적절한 값을 인자로 받은 경우
+   - IndexError : 인덱스가 범위를 벗어날 때 발생
+   - KeyError : 딕셔너리에 키가 존재하지 않을 경우
+   - ModuleNotFoundError
+   - ImportError
+   - KeyboardInterrupt : 사용자가 키보드로 강제 종료시
+   - IndentaionError : 잘못된 들여쓰기
+
+## Exception Handling(예외 처리)
+
+### 예외 처리 사용 구문
+- try: 예외가 발생할 수 있는 코드
+- except: 예외가 발생했을 때 실행할 코드
+- else: 예외가 발생하지 않았을 때 실행할 코드
+- finally: 예외 발생 여부와 상관없이 항상 실행할 코드
+
+```python
+# try-except
+try:
+    result = 10 / 0
+except ZeroDivisionError: # except를 비우면 try에서 발생하는 모든 예외에 반응
+    print('0으로 나눌 수 없습니다.')
+
+
+try:
+    num = int(input('숫자입력: '))
+except ValueError:
+    print('숫자가 아닙니다.')
+```
+
+#### 복수 예외 처리
+```python
+# 복수 예외처리
+try:
+    num = int(input('100을 나눌 값을 입력하시오 : '))
+    print(100 / num)
+except (ValueError, ZeroDivisionError):
+    print('안돼 돌아가')
+
+# 복수 예외처리
+try:
+    num = int(input('100을 나눌 값을 입력하시오 : '))
+    print(100 / num)
+except ValueError:
+    print('숫자를 입력해')
+except ZeroDivisionError:
+    print('0으로는 나눌 수 없어')
+except:
+    print('알 수 없는 에러가 발생했습니다.')
+```
+
+#### else & finally
+
+```python
+try:
+    x = int(input('숫자를 입력하세요: '))
+    y = 10 / x
+except ZeroDivisionError:
+    print('0으로 나눌 수 없습니다.')
+except ValueError:
+    print('유효한 숫자가 아닙니다.')
+else:
+    print(f'결과: {y}')
+finally:
+    print('프로그램이 종료되었습니다.')
+```
+
+### 예외 처리 주의사항
+
+#### BaseException
+내장 예외 클래스는 상속 계층 구조를 가지기 때문에
+except 절로 분기 시 반드시 하위 클래스를 먼저 확인할 수 있도록 작성
+
+```python
+# 아래와 같이 예외를 작성하면 코드는 2번째 except 절에 이후로 도달하지 못함
+# ZeroDivisionError 클래스는 BaseException 클래스의 하위 클래스 중 하나이므로 ZeroDivisionError를 먼저 작성해야 함
+try:
+    num = int(input('100으로 나눌 값을 입력하시오 : '))
+    print(100 / num)
+except BaseException:
+    print('숫자를 넣어주세요.')
+except ZeroDivisionError:
+    print('0으로 나눌 수 없습니다.')
+except:
+    print('에러가 발생하였습니다.')
+```
+
+#### as keyword
+예외가 발생했을 때 예외에 대한 정보를 담고 있는 객체
+except 블록에서 예외 객체를 받아 상세한 예외 정보 활용
+
+```python
+my_list = []
+
+try:
+    number = my_list[1]
+except IndexError as error:
+    # list index out of range가 발생했습니다.
+    print(f'{error}가 발생했습니다.')
+```
+
+#### try-except 와 if-else는 같이 사용 가능
+
+### EAFP & LBYL
+
+```python
+my_dict = {'key': 'value'}
+
+# EAFP (Easier to Ask for Forgiveness than Permission)
+try:
+    result = my_dict['key']
+    print(result)
+except KeyError:
+    print('Key가 존재하지 않습니다.')
+
+
+# LBYL (Look Before You Leap)
+if 'key' in my_dict:
+    result = my_dict['key']
+    print(result)
+else:
+    print('Key가 존재하지 않습니다.')
+```
+
+
+#### Easier to Ask for Forgiveness than Permission(EAFP)
+- 예외 처리를 중심으로 코드 작성
+- try - except
+
+#### Look Befor You Leap(LBYL)
+- 값 검사를 중심으로 코드 작성
+- if - else
+
+![alt text](image-30.png)
+
