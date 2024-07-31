@@ -327,3 +327,268 @@ print(*TEMP) # 언패킹 하여 결과 확인
 data = list(map(int,input()))
 ```
 
+
+## 2차원 배열
+- 1차원 List를 묶어놓은 List
+- 다차원 List는 차원에 따라 Index 선언
+- 2차원 List 선언: 세로길이(행의 개수), 가로 길이(열의 개수)를 필요로 함
+
+```python
+arr = [[0,1,2,3],[4,5,6,7]]
+
+
+N = int(input())
+'''
+3
+1 2 3
+4 5 6
+7 8 9
+'''
+arr = [list(map(int, input().split())) for _ in range(N)]
+'''
+3
+123
+456
+789
+'''
+arr = [list(map(int, input())) for _ in range(N)]
+
+arr2 = [[0] * N for _ in range(N)]
+
+arr2 = [[0] * 3 for _ in range(2)]
+```
+
+```python
+for i in range(2):
+  print(arr2[i]) # 행 전체 호출
+
+print(arr2[1])
+
+
+for i in range(2): # 각 행렬에 대한 값으로 보여줌
+    for j in range(3):
+        print(arr2[i][j], end=' ')
+    print()
+
+
+print(len(arr)) # 행 개수
+print(len(arr[0])) # 열 개수
+```
+
+* 주의사항
+```python
+arr = [[0]*3]*2
+print(arr)
+#[[0, 0, 0], [0, 0, 0]]
+
+arr[0][0] = 1
+print(arr)
+# [[1, 0, 0], [1, 0, 0]]
+# 1, 2 행이 동시에 바뀜
+```
+
+### 배열 순회
+- nXm 배열의 n*m개의 모든 원소를 빠짐없이 조사하는 방법
+
+1) 행 우선 순회
+```python
+arr2 = [[0] * 3 for _ in range(2)]
+
+# 행 우선 순회
+for i in range(2):
+    for j in range(3):
+        print(arr2[i][j], end=' ')
+    print()
+```
+
+2) 열 우선 순회
+
+```python
+arr2 = [[0] * 3 for _ in range(2)]
+# 열 우선 순회
+for j in range(2):
+    for i in range(3):
+        print(arr2[i][j], end='')
+    print()
+```
+
+3) 지그재그 순회
+```python
+arr2 = [[1,2,3],[4,5,6]]
+
+# 지그재그 순회
+
+for i in range(2):
+    if i % 2 == 0:
+        for j in range(3):
+    else:  
+        for j in range(2,-1,-1)
+
+
+for i in range(N):
+    for i in range(M):
+        print(arr2[i][j + (M-1-2*j)*(i%2)]) #i가 짝수 -> 0/ 홀수 -> 1
+```
+
+
+- 배열 순회 예시
+```python
+# 모든 요소의 합
+s = 0
+for i in range(2):
+    for j in range(3):
+        s += arr2[i][j]
+print(s)
+
+
+# 행의 합 중 최댓값?
+max_v = float('-inf') # 문제에 맞는 적절한 작은 값, -inf는 너무 큰 느낌
+for i in range(2):
+    s = 0 # s값 초기화
+    for j in range(3):
+        s += arr2[i][j]
+        if max_v > s:
+            max_v = s
+print(max_v)
+```
+
+### 델타를 이용한 2차 배열 탐색 (방향 배열)
+- 2차 배열의 한 좌표에서 4방향의 인접 배열 요소를 탐색하는 방법(상대적임)
+- 인덱스 (i,j)인 칸의 상하좌우 칸(ni,nj)
+
+
+![alt text](image-44.png)
+***방향 번호에 따라 편할 때가 있지만 보통 한 방향을 정해서 di,dj를 정의해두는 것이 좋음***
+
+
+```python
+# 오른쪽: a[i+0][j+1]
+# 아래: a[i+1][j+0]
+# 왼쪽: a[i+0][j-1]
+# 위 : a[i-1][j+0] 
+
+arr = [[0] * N for _ in range(M)] 
+
+di = [0, 1, 0, -1] # i가 클 수록 밑으로 감
+dj = [1, 0, -1, 0]
+
+#dij = [(0,1)...] 이렇게 하는 경우도 있음
+
+방향 튜플
+direction = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+for di, dj in direction:
+    ni, nj = y + di, x + dj
+
+
+for i in range(M):
+    for j in range(N):
+        for k in range(4): # 방향 계산 배열 배열
+            ni = di[k]
+            nj = dj[k]
+            0 <= ni < M and 0 <= nj < N # 인덱스 유효한지 검사
+```
+* 방향 배열 사용법
+- 현재 위치(y, x) i 번째 방향으로 이동
+  ny, nx = y + dy[i], x + dx[i]
+
+
+
+![alt text](image-45.png)
+
+### 전치 행렬 (대각선에 있는 자료 변경)
+- 대각선 기준 오른쪽으로 있는 것과 왼쪽에 바꾸는 것
+```python
+arr = [[1,2,3],[4,5,6],[7,8,9]] # 3*3행렬
+
+for i in range(3) :
+    for j in range(3) :
+        if i < j:
+            arr[i][j], arr[j][i] = arr[j][i], arr[i][j]
+```
+
+### i,j의 크기에 따라 접근하는 원소 비교
+![alt text](image-46.png)
+
+대각선
+for i: 0 -> N-1
+    arr[i][i]
+
+역 대각선
+for i: 0 -> N-1
+    arr[i][N-1-i]
+
+
+
+### 연습문제
+
+- 1-2
+```python
+# 연습문제 1-2
+N = int(input()) # 행과 열에 대해 주는 값 확실히 이해하기
+arr = [list(map(int, input().split())) for _ in range(N)]
+
+di = [0, 1, 0, -1]
+dj = [1, 0, -1, 0]
+
+total = 0
+for i in range(N):
+    for j in range(N): # N*N의 배열의 모든 원소에 대해
+        s = 0           # 원소와 주변 인접 원소의 차의 절댓값의 합
+        for k in range(4): # i, j 원소의 네 방향 원소에 대해
+            ni = i + di[k]
+            nj = j + dj[k]
+            if 0 <= ni < N and 0 <= nj < N: # 실존 여부 유효성 검사
+                s += abs(arr[i][j] - arr[ni][nj]) # 실존하는 인접원소
+        total += s # 총합에 반영
+print(total)
+```
+
+
+
+![alt text](image-47.png)
+
+부분집합의 경우 각 요소에 대해 들어간다/ 들어가지 않는다 의 2가지 경우로 나뉨
+들어간다 / 아니다를 0,1의 값을 가진 bit라는 배열로 생성
+
+```python
+# 부분집합 생성하기
+
+bit = [0, 0, 0, 0]
+for i in range(2):
+    bit[0] = i
+    for j in range(2):
+        bit[1] = j
+        for k in range(2):
+            bit[2] = k
+            for l in range(2):
+                bit[3] = l
+                # print_subset(bit)
+
+# 간결하게 생성하기
+
+arr = [3, 6, 7, 1, 5, 4]
+n = len(arr) #  n : 원소의 개수
+
+for i in range(1 << n): # 1 << n : 부분집하븨 개수
+    for j in range(n): # 원소의 수만큼 비트 비교
+        if i & (1 << j): # i의 j번 비트가 1인 경우
+            print(arr[j], end=",") # j번 원소 출력
+    print()
+print()
+
+
+```
+
+### 비트 연산자
+- "&" : 비트 단위로 AND 연산
+- "|" : 비트 단위로 OR 연산
+- "<<" : 피연산자의 비트열을 왼쪽으로 이동
+- ">>" : 피연산자의 비트열을 오른쪽으로 이동
+
+#### << 연산자(쉬프트 연산자)
+- 1 << n : 2**n 즉, 원소가 n 개인 경우의 모든 부분집합의 수
+
+#### & 연산자
+- i & (1 << j) : i의 j번째 비트가 1인지 아닌지 검사
+
