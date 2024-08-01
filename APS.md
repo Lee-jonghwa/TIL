@@ -570,7 +570,7 @@ for i in range(2):
 arr = [3, 6, 7, 1, 5, 4]
 n = len(arr) #  n : 원소의 개수
 
-for i in range(1 << n): # 1 << n : 부분집하븨 개수
+for i in range(1 << n): # 1 << n : 부분집의 개수
     for j in range(n): # 원소의 수만큼 비트 비교
         if i & (1 << j): # i의 j번 비트가 1인 경우
             print(arr[j], end=",") # j번 원소 출력
@@ -586,9 +586,167 @@ print()
 - "<<" : 피연산자의 비트열을 왼쪽으로 이동
 - ">>" : 피연산자의 비트열을 오른쪽으로 이동
 
+연산 기본
+1) 비트 이동 연산(<<)
+    1 << 3 --> 이진수 1을 왼쪽으로 3칸 밀기 --> 2진수 1000, 10진수 8
+2) 비트 AND 연산(&)
+    두 이진수의 각 자라를 비교하여, 둘 다 1이면 1, 그렇지 않으면 0
+    ex) 1100 & 0101 == 0100
+
 #### << 연산자(쉬프트 연산자)
 - 1 << n : 2**n 즉, 원소가 n 개인 경우의 모든 부분집합의 수
 
 #### & 연산자
 - i & (1 << j) : i의 j번째 비트가 1인지 아닌지 검사
 
+
+### 검색(Search)
+1) 저장되어 있는 자료 중에서 원하는 항목을 찾는 작업
+2) 목적하는 탐색 키를 가진 항목을 찾는 것
+  - 탐색 키(search key): 자료를 구별하여 인식할 수 있는 키
+
+#### 순차 검색(sequential search)
+
+1) 일렬로 되어 있는 자료를 순서대로 검색하는 방법
+  - 가장 간단하고 직관적
+  - 배열, 리스트 등 순차구조에 유용
+  - 알고리즘이 단순하지만, 검색 대상의 수가 많으면 수행시간이 급격히 증가하여 비효율적
+
+  
+**1. 정렬되어 있지 않은 경우**
+
+1) 검색 과정
+   - 첫 원소부터 순서대로 검색 대상과 키 값이 같은 원소가 있는지 비교
+   - 키 값이 동일한 원소를 찾으면 그 원소의 인덱스 반환
+   - 마지막에 이를 때까지 검색 대상을 찾지 못하면 검색 실패 => 구조를 벗어난 곳을 최종으로 지정하여 멈추기
+
+2) 구현 식
+   - 첫 번째 원소를 찾을 때는 1번 비교, 두 번째는 2번
+   - 정렬되지 않은 자료에서의 순차검색의 평균 비교 횟수 => 모든 요소를 한 번씩 다 찾아본다는 의미
+     -> (1/n) * (1+2+3+...+n) = (n+1)/2
+   - 시간 복잡도 O(n)
+```python
+def sequential_search(a, n, key):
+    # a-검색 대상 / # n-원소 갯수 / key-찾을 값
+    i = 0
+    while i < n and a[i] != key : # key랑 같으면 다음으로 이동
+        i += 1
+    if i < n:
+        return i
+    else: # 배열 끝까지 순회한 경우
+        return -1
+```
+![alt text](image-48.png)
+
+**2. 정렬되어 있는 경우**
+
+1) 검색 과정
+   - 자료가 오름차순으로 정렬
+   - 순차적으로 검색하면서 키 값을 비교, 원소의 키 값이 검색 대상의 키 값보다 크면 찾는 원소가 없다는 것
+2) 구현식
+   - 정렬이 되어 있으므로, 검색 실패를 반환시, 평균 비교 횟수가 반으로 줄어듦
+   - 시간 복잡도 : O(n)
+```python
+def sequentialSearch2(a, n, key):
+    i = 0
+    while i < n and a[i] < key: # 순서가 바뀌지 않는 것이 중요(단축평가 때문)
+    # 더 어려운 조건을 또는 에러가 나지 않는 것을 먼저 위치시켜야 함
+        i += 1
+    if i <n and a[i] == key: # 배열을 벗어나지 않은 상황에서 키가 같으면
+        return i
+    else :
+        return -1
+```
+![alt text](image-50.png)
+
+#### 이진 검색(binary search)
+
+- 자료의 가운데에 있는 항목의 키 값과 비교하여 다음 검색의 위치를 결정하고 검색을 계속 진행하는 방법
+- "정렬된 상태"에서만 가능
+- 정수형 데이터일 때 대부분 사용
+
+1) 검색 과정
+- 목적 키를 찾을 때까지 이진 검색을 순환적으로 반복 수행하여 검색 범위를 반으로 줄여 빠르게 검색 수행 => 업다운 느낌
+
+2) 구현식
+- 검색 범위의 시작점과 종료점을 이용하여 검색 반복 수행
+- 자료에 삽입이나 삭제가 발생했을 때 배열의 상태를 항상 정렬 상태로 유지하는 작업 필요
+```python
+def binarySearch(a, N, key):
+    start = 0
+    end = N-1 # 시작/종료점 index
+    while start <= end: # 남은 구간이 있으면(남은 구간이 하나만 있어도 확인해야해 =도 포함)
+        middle = (start + end)//2 
+        if a[middle] == key: # 검색 성공
+            return True
+        elif a[middle] > key :
+            end = middle - 1
+        else:
+            start = middle + 1
+    return False            # 검색 실패
+```
+![alt text](image-49.png)
+
+- 재귀함수 활용
+```python
+def binarySearch2(a, low, high, key):
+    if low > high: # 검색 실패
+        return False
+    else:
+        middle = (low + high)//2
+        if key == a[middle]: # 검색 성공
+            return True
+        elif key < a[middle]:
+            return binarySearch2(a, low, middle-1, key)
+        elif a[middle] < key:
+            return binarySearch2(a, middle+1, high, key)
+```
+
+![alt text](image-51.png)
+
+
+#### 참고: 인덱스
+- 인덱스: Database에서 유래되어, 테이블에 대한 동작 속도를 높여주는 자료 구조를 일컬음
+- Database 분야가 아닌 곳에선 Look up table 등의 용어를 사용하기도 함
+- 인덱스를 저장하는 데 필요한 디스크 공간은 보통 테이블과 비교해 작음
+  --> 보통 인덱스는 키-필드만 갖고 있는 반면 테이블의 다른 세부 항목들은 갖고 있지 않기 때문
+- 대량의 데이터를 매번 정렬시 프로그램은 느려질 수밖에 없기 때문에 배열 인덱스를 활용하면 좋음
+  --> 데이터베이스 인덱스는 이진 탐색 트리 구조로 되어있음
+
+#### 선택 정렬
+
+- 선택 정렬: 주어진 자료들 중 가장 작은 원소부터 차례대로 선택하여 위치 교환하는 방식
+
+- 정렬 과정
+  - 주어진 리스트 중 최소값 찾음
+  - 리스트의 맨 앞에 위치한 값과 교환한다. -> 인덱스로 접근 => min_v보다 min_idx해도 괜찮
+  - 맨 처음 위치를 제외한 나머지 리스트틀 대상으로 과정 반복
+  - 미정렬 원소가 하나 남은 상황에서는 그 원소가 가장 큰 값이므로 실행 종료
+
+- 시간 복잡도 = O(n**2)
+
+```python
+def SelectionSort(a[], n):
+    for i in range(n-1): # 기준위치(구간의 시작 인덱스)
+        min_idx = i #현재 구간의 맨앞(기준위치)을 최소로 가짐
+        for j in range(i+1,n): #비교 구간 원소 j
+            if a[min_idx] > a[j]:
+                min_idx = j
+        a[i], a[min_idx] = d[min_idx], a[i] # 작은 값과 현재 값 바꾸기
+
+
+def selections_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = 1
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = 1
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    
+    return arr
+
+arr = [51, 32, 56, 67, 86, 79, 99, 123, 33, 3, 2]
+sorted_arr = selections_sort(arr)
+print(sorted_arr)
+```
