@@ -1,4 +1,9 @@
-
+* 참고 : sys 모듈
+```python
+import sys
+sys.stdin = open("./input/txt", "r")
+#==> 인풋 파일을 받아두고 동작하면, 자동으로 테스트 해줌 -> 연습할 때 유용!
+```
 SWEA - Learn - Course - 파이썬(linked list 제외)
 
 - 알고리즘 : 문제를 해결하기 위한 절차나 방법
@@ -116,14 +121,6 @@ print(min_v);
   3. 교환하며 자리를 이동하는 모습이 물 위에 올라오는 거품과 같다고 해서 버블 정렬
 
 - 시간 복잡도: O(n**2)
-
-![alt text](image-2.png)
-
-![alt text](image-3.png)
-
-![alt text](image-4.png)
-
-![alt text](image-5.png)
 
 풀이 시 기준 인덱스가 있어야 함(비교하는 기준)
 
@@ -750,3 +747,114 @@ arr = [51, 32, 56, 67, 86, 79, 99, 123, 33, 3, 2]
 sorted_arr = selections_sort(arr)
 print(sorted_arr)
 ```
+
+# String
+## 문자의 표현
+- 글자 그대로의 모양을 비트맵으로 저장하는 것은 메모리낭비가 심하기 때문에 숫자로 저장
+- 알파벳의 경우 52자이므로 6비트(64가지)면 모두 표현 가능 -> '코드체계'
+- 기존엔 각 지역별로 코드체계를 정함 -> 네트워크가 발달하며 코드가 달리 해석되는 문제 확인 -> 표준안 제정 ==> ASCII(American Standard Code for Information Interchange) 코드 제정(1967)
+- ASCII는 7-bit 인코딩으로 128문자 표현, "33개의 출력 불가능한 제어 문자"들과 공백을 비롯한 "95개의 출력가능한 문자"들로 이루어짐
+
+- 확장 아스키: 표준 문자 이외의 악센트, 도형, 특수 문자, 특수 기호 등 부가적인 문자 128개 추가한 8-bit(1 byte) 문자열
+  - 컴퓨터 생산자와 소프트웨어 개발자가 다양한 문자에 할당할 수 있도록 함 -> 확장부호는 다른 프로그램/컴퓨터와 교환 불가
+  - 확장 아스키는 통용되지 않고 프린터가 해독할 수 있도록 설계되어야 해독 가능
+
+- 대부분 컴퓨터는 ASCII 형식을 활용하나 다양한 문자를 표현하기 위해 다양한 코드 체계가 생김 -> 우리나라도 조합형, 완성형 코드
+
+- UNICODE: 다국어 처리를 위한 표준 코드 체계
+  - 인터넷이 발전하며 세계 간에 서로의 문자를 잘못된 해석 없이 받기 위한 코드체계 교환이 필요함
+
+- UNICODE Character Set
+    - UCS-2(Universal Character Set 2)
+    - UCS-4(Universal Character Set 4)
+  유니코드를 저장하는 변수의 크기를 정의했으나, 바이트 순서에 대해서 표준화 하지 못함
+  파일 인식 시 UCS-2인지 UCS-4인지를 인식하고 각 경우를 구분해서 모두 다르게 구현해야 하는 문제 발생
+  --> 유니코드에 대한 적당한 외부 인코딩 필요 
+
+- 유니코드 인코딩(UTF; Unicode Transformation Format)
+  - UTF-8(web/ 1 Byte * 2), UTF-16(windows, java/ 2 Byte * 2), UTF-32(unix/ 4 Byte * 1)
+  - UTF-16BE 
+  - CR/LF -> 제어문자 중 일부, 줄바꿈 후 커서를 젤 앞으로 라는 뜻
+
+## 문자열(string)
+
+- 시퀀스 자료형으로 분류, 시퀀스 자료형에서 사용할 수 있는 인덱싱, 슬라이싱 연산 사용 가능
+- 문자열은 튜플과 같이 요소 변경 불가(immutable)
+
+- 문자열 기호 : ', "", ''', """
+- '+': 연결
+- '*': 반복
+
+
+![alt text](image-52.png)
+
+C타입의 strlen 함수 파이썬에서 정의
+```python
+def my_strlen(a):
+    i = 0
+    while a[i] == '\0':
+        i += 1
+```
+
+- C와 Java의 String차이
+  - C는 ASCII, Java는 UTF16, 파이썬은 UTF-8
+
+### 문자열 뒤집기
+- 문자열에서 뒤집는 방법, 새로운 문자열을 만들어 뒤에서 부터 읽는 방법
+
+1) 자기 문자열 이용 -> swap을 위한 임시 변수 필요 -> 문자열 반만의 길이를 수행(n // m)
+```python
+for i in (n//2):
+    a[i], a[n-1-i] = a[n-1-i], a[i]
+```
+
+### 문자열 비교
+- 파이썬 문자열 비교에서 "==" 연산자와 is 연산자 제공
+*Java 는 메모리참조 비교(파이썬은 단순 내용 비교)
+
+- ord/chr 함수 => 아스키코드로 왔다갔다 
+```python
+s1 = "A"
+print(ord('A'))
+print(ord(s1))
+
+print(chr(65)) 
+```
+
+### 아스키 코드
+ord() -> 문자를 ascii 값으로
+chr() -> ascii 값을 문자로
+
+**대문자 A: 65, 소문자 a: 9**
+- 대문자보다 소문자의 아스키 코드값이 더 큼
+- " "(space)도 아스키 코드값이 있음
+
+- if, 조건 식에서 아스키 코드 값을 사용할 필요는 없음
+    예 : if 'a' <= x <= 'z'
+
+- atoi 함수 만들기(int와 같음)
+```python
+def atoi(s):
+    i = 0
+    for x in s:
+        i = i*10 + (ord(x) - ord('0')) # ord('0')이 ascii 1 기준이므로 가능
+    return i
+```
+
+### 회문 : string == string[::-1]
+
+### 문자열에서 자주 사용하는 메서드
+- split(), strip(): 공백제거, lstrip(), rstrip()
+- replace(), join()
+- find(), index() : find -> 못 찾으면 -1, index -> error
+- isdigit(), isalpha(), isalnum() : 문자열이 숫자, 알파벳 또는 둘 다로 이루어져 있는지 확인
+
+## 패턴 매칭
+
+
+
+## 문자열 암호화
+
+
+
+## 문자열 압축
