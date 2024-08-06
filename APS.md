@@ -939,6 +939,213 @@ print(cnt)
 
 ## 문자열 암호화
 
-
-
 ## 문자열 압축
+
+
+# Stack
+
+## 스택의 특성
+- 물건을 쌓아 올리듯 자료를 쌓아 올린 형태의 자료구조
+- 스택에 저장된 자료는 선형 구조를 가짐
+  - 선형 : 자료 간의 관계가 1대1의 관계
+  - 비선형 : 자료 간의 관계가 1대N의 관계(트리형 등)
+- 스택에 자료를 삽입하거나 스택에서 자료를 꺼낼 수 있다.
+- 후입선출(LIFO; Last In First Out)
+
+그럼 중간 자료를 수정할 경우는...?
+
+## 스택의 구현
+- 자료구조: 자료를 선형으로 저장할 저장소
+  - 배열을 사용할 수 있음
+  - 저장소 자체를 스택이라 부르기도 함
+  - 스택에서 마지막 삽입된 원소의 위치를 top이라고 함 
+- 연산
+  - 삽입(push): 저장소에 자료 저장
+  - 삭제(pop): 저장소에 자료 꺼냄(역순)
+  - .isEmpty: 공백인지 아닌지
+  - .peek: top에 있는 item 반환
+- 삽입 삭제 과정
+  ![alt text](image-55.png)
+  "push - top 증가 - 새로운 원소 저장"
+  "pop - top 감소 - 마지막 원소 꺼냄"
+- 스택의 push 알고리즘
+  - append 메소드를 통해 리스트의 마지막에 데이터를 삽입
+
+'''
+stack =[]
+for ~
+    for ~
+        code..
+        if 조건
+            stack.append() -> 후입
+        else 조건
+            stack.pop() -> 선출
+'''
+
+참고 : stack
+- 재귀, used 가지치기 -> DFS(Depth-First Search)에 활용
+
+참고 : Queue
+- 선입 -> append()
+- 선출 -> pop(0) ==> 시간복잡도가 O(N)으로 높음
+- 해결 방안 : deque 사용 from collections import deque
+- 선입 -> append() / 선출 -> popleft()
+- + visited 배열 + 재귀 + 백트래킹 ... -> BFS에 활용
+
+참고 : 우선순위 큐
+- heapq 모듈 사용, import heapq
+- heappush: 가장 작은 요소가 항상 첫 번째 요소에 옴
+- heappop: 힙에서 가장 작은 요소를 제거
+- 다익스트라 알고리즘에서 활용
+
+참고 : DP => 종이붙이기 문제
+- 문제의 최고 부분 구조 파악
+- 재귀적 구조
+- 점화식이 들어가는 것이 특징
+- 작은 문제부터 해결하며 결과에 저장(Bottom-up)
+- 큰 문제를 작은 문제로 나누며 해결(Top-down)
+- 저장된 결과를 이용해서 문제의 해를 구한다.
+
+```python
+s = [] # 빈 스택
+
+def push(item):
+    s.append(item)
+```
+```python
+def push(item, size):   # item: 넣을 요소, size: stack 사이즈
+    global top          # 읽어오는 건 global로 되지만, 기록하려면 global 필요
+    top += 1
+    if top == size:     # 디버깅용 성격이 강함 => 스택이 모자라다는 걸 알림
+        print('overflow!')
+    else:
+        stack[top] = item
+
+size = 10
+stack = [0] * size
+top = -1
+
+push(10, size)
+top += 11       # push(20)
+stack[top] = 20 # 
+
+```
+- 스택의 pop 알고리즘
+```python
+def my_pop():
+    if len(s) == 0:
+        #underflow
+        return
+    else:
+        return s.pop()  # 가장 마지막 요소 제거, 아닐 경우 인덱스
+```
+
+```python
+def my_pop():
+    global top
+    if top == -1:
+        print('underflow')
+        return 0            # 형식을 맞춰주기 위함
+    else:
+        top -= 1            # top을 하나 먼저 낮춘 후
+        return stack[top+1] # 그 자리에 있는 요소를 리턴
+        # 요소를 지울 필요는 없음
+        # top을 낮추는 것과 요소 리턴의 자리를 바꿔도 상관 없음
+
+print(my_pop())
+
+if top > -1:
+    top -= 1               
+    print(stack[top+1])
+
+```
+
+```python
+while top > -1:
+    v = stack[top]
+    top -= 1
+```
+
+
+## 스택의 응용
+
+### 스택 구현 고려사항
+- 1차원 배열 사용하여 구현 시 구현은 용이하나 크기 변경이 어렵다.
+  - 저장소를 동적으로 할당하는 스택 구현 => 동적 연결리스트를 이용(추가/삭제 시간이 짧음)
+  - 구현은 복잡하지만 메모리를 효율적이로 사용하는 장점
+
+### 괄호 검사
+1) 조건
+   - 왼쪽 괄호와 오른쪽 괄호의 개수 같음
+   - 같은 괄호에서 왼쪽 괄호는 오른쪽 괄호보다 먼저 나옴
+   - 괄호 사이에는 포함관계만 존재
+2) 스택을 활용한 괄호검사
+![alt text](image-56.png)
+- 여는 괄호 -> 푸쉬
+- 닫는 괄호 -> 팝
+
+==> Overflow, Underflow의 에러
+3) 괄호 조사 알고리즘 개요
+   - 문자열에 있는 괄호 차례대로 조사 - 왼쪽 괄호 만나면 스택 삽입, 오른쪽 괄호 만나면 top 괄호 pop하고 짝 맞는지 검사
+   - 스택이 비어있으면 x, 짝이 맞지 않으면 조건 3에 위배
+   - 마지막 괄호까지를 조사한 후에도 스택에 괄호가 남아 있으면 조건 1에 위배
+
+### Function Call
+- 프로그램에서의 함수 호출과 복귀에 따른 수행 순서 관리
+  - 마지막에 호출된 함수가 먼저 실행 
+  - 함수호출이 발생하면 호출한 함수 수행에 필요한 지역변수, 매개변수 및 수행 후 복귀할 주소 등의 정보를 stack frame에 저장하여 시스템 스택에 삽입
+  - 함수의 실행이 끝나면 시스템 스택의 top원소를 pop하면서 프레임에 저장되어 있던 복귀주소를 확인 및 복귀
+  - 함수 호출과 복귀에 따라 이 과정을 반복항 전체 프로그램 수행이 종료되면 시스템 스택은 공백 스택이 됨
+![alt text](image-60.png)
+
+
+![alt text](image-61.png)
+
+인자 순서를 바꾼 경우
+
+![alt text](image-62.png)
+
+어차피 매개변수와 인자의 차이
+
+
+### 재귀호출
+- 필요한 함수가 자신과 같은 경우 자신을 다시 호출하는 구조
+- 재귀호출방식을 사용하여 함수를 만들면 프로그램 크기를 줄이고 간단하게 작성
+- 서로 다른 함수를 호출하지만 내용이 같다고 생각하기
+- 완전탐색에 유용
+
+
+1) factorial 함수
+![alt text](image-63.png)
+2) 피보나치 수열
+```python
+def fibo(n):
+    if n < 2:               # 종료 조건 설정하기
+        return n
+    else:
+        return fibo(n-1) + fibo(n-2)
+```
+3) 모든 배열 원소에 접근하기
+![alt text](image-64.png)
+![alt text](image-65.png)
+
+### 모든 배열 원소 접근
+
+```python
+def f(i, N):        # i: 접근할 원소 인덱스, N: 크기
+    if i == N:      # 배열을 벗어난 경우
+        return
+    else:           # 그렇지 않은 경우
+        print(arr[i])
+        f(i+1, N)
+        return
+
+arr = [1, 2, 3]
+N = 3
+f(0, N)
+```
+
+4) 배열에 v가 있으면 1 없으면 0을 리턴
+```python
+
+```
