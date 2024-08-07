@@ -1149,3 +1149,398 @@ f(0, N)
 ```python
 
 ```
+
+# Memoization(메모이제이션)
+
+
+![alt text](image-66.png)
+- 피보나치 수열의 경우 중복 호출이 발생
+- 처음엔 구현하는 것을 목표 - 이후에 좀 줄일 순 없을까?
+
+## 정의
+- Memoization: 컴퓨터 프로그램을 실행할 때 이전에 계산한 값을 메모리에 저장하여 매번 다시 계산하지 않도록 하여 실행속도를 빠르게 하는 기술. "동적 계획법의 핵심"
+- 메모리에 넣기(to put in memory)라는 의미, 동사형은 memoize
+- fibo(n)의 값을 계산하자 마자 memoize하면 실행시간을 세타(n)으로 줄일 수 있음
+
+## 알고리즘
+```python
+# memo를 위한 배열을 할당, 0으로 초기화
+# memo[0]은 0으로 memo[1]은 1로 초기화
+# memo[0] == fibo(0)
+
+def fibo1(n):
+    global memo
+    if n >= 2 and memo[n] == 0: # fibo1(n)이 계산된 적이 없는 상태
+        memo[n] = fibo1(n-1) + fibo1(n-2)
+    return memo[n]
+
+n = 7
+memo = [0] * (n+1)
+memo[0] = 0
+memo[1] = 1
+fibo1(n)
+print(memo) # [0, 1, 1, 2, 3, 5, 8, 13] / 값들에 대한 리스트 출력
+
+## 피보나치 처럼 알려진 것에서는 문제가 되지 않겠지만, 그렇지 않다면 수식에 맞게 해야할 필요 있음
+
+```
+
+# Dynamic Programming(DP; 동적 계획법)
+- 그리디 알고리즘과 같이 최적화 문제를 해결하는 알고리즘
+- 먼저 입력 크기가 작은 부분 문제들을 모두 해결 -> 그 해들을 이용하여 큰 부분 문제들 해결 --> 최종적으로 원래 주어진 입력 문제를 해결하는 알고리즘
+
+![alt text](image-67.png)
+
+- 재귀의 경우 길이에 비해 호출, 복귀 시간이 오래 걸림 -> 반복이 가능하다면 반복이 더 빠름
+- 다만 모든 함수에 적용되는 것은 아니므로 상황에 따라 잘 사용하는 것 필요함
+- 코드가 짧은 경우가 많지만 코드를 해석하기가 어려운 경우가 많음
+
+## 피보나치 수 DP 적용
+- 피보나치 수는 부분 문제의 답으로 본 문제의 답을 얻을 수 있음 -> 최적 부분 구조(어떤 부분을 보더라도 최적해)
+- 큰 값-> 작은 값이 아닌 작은 값 -> 큰 값
+
+1) 문제를 부분 문제 분할
+2) 가장 작은 부분 문제부터 해를 구한다.
+3) 결과를 테이블에 저장, 부분 문제 해를 통해 상위문제 해를 구함
+
+```python
+def fibo2(n):
+    f = [0] * (n+1)
+    f[0] = 0
+    f[1] = 1
+    for i in range(2, n+1):
+        f[i] = f[i-1] + f[i-2]
+    
+    return f[n]
+```
+
+## DP의 구현 방식
+- recursive 방식 or iterative 방식
+- memoization을 재귀적 구조에 사용하는 것보다 반복적 구조로 DP를 구현한 것이 성능 면에서 더 효율적
+- 재귀적 구조는 내부에 시스템 호출 스택을 사용하는 오버헤드 발생
+
+# Deep Firs Search(DFS; 깊이우선탐색)
+- 비선형구조인 그래프 구조는 그래프로 표현된 모든 자료를 **"빠짐없이 검색"**하는 것이 중요
+  깊이우선탐색 또는 너비우선탐색(Breadth First Search; BFS) 활용 가능
+  시작 정점의 한 방향으로 갈 수 있는 경로가 있는 곳까지 깊이 탐색 -> 더 이상 갈 곳이 없으면 -> 가장 마지막에 만난 갈림길 간선이 있는 정점으로 되돌아 옴 -> 다른 방향의 정점으로 탐색을 계속 반복 -> 결국 모든 정점을 방문
+- **가장 마지막에 만났던 갈림길의 정점**으로 되돌아가서 다시 깊이우선탐색을 반복해야 하므로 **후입선출 구조 스택 사용**
+     - 재귀의 경우 직전 함수의 값을 저장하고 다음 연산을 하므로 거의 유사
+
+![alt text](image-68.png)
+- 로봇이 오른쪽으로 우선 이동한다고 할 때 -> 지나갔던 곳은 표식을 남김 -> 도달하지 않으면 뒷걸음질 침 -> 표식있는 곳은 지나쳐 더 이전으로 되돌아옴 -> 표식이 없는 다른곳으로 이동 -> 도달하지 않으면 다시 뒷걸음질 -> 갈림길이 없을 때 다시 돌아옴
+
+## DFS 알고리즘
+
+1) 시작 정점 v를 결정하여 방문
+2) 정점 v에 인접한 정점 중에서
+   1) 방문하지 않은 정점 w가 있으면, 정점 v를 스택에 push하고 정점 w를 방문
+   2) w를 v로 하여 다시 반복
+   3) 방문하지 않은 정점이 없으면, 탐색의 방향을 바꾸기 위해서 스택을 pop하여 받은 가장 마지막 정점을 v로 하여 반복
+3) 스택이 공백이 될 때까지 2번을 반복
+
+-- 로봇 그림 그려 보기!
+
+![alt text](image-70.png)
+![alt text](image-71.png)
+![alt text](image-72.png)
+
+```pseudo
+# visited, stack 초기화
+visited = []
+stack = []
+
+DFS(v):
+    시작점 v 방문
+    visited[v] <- true;
+    while {
+        if v의 인접 정점 중 방문 안 한 정점 w가 있으면
+            push(v);
+            v <- w; (w 방문)
+            visited[w] <- true;
+        else
+            if 스택이 비어있지 않으면
+                v <- pop(stack);
+            else
+                break
+    }
+end DFS
+```
+
+![alt text](image-73.png)
+![alt text](image-74.png)
+![alt text](image-75.png)
+![alt text](image-76.png)
+
+
+```python
+'''
+1
+7 8
+1 2 1 3 2 4 2 5 4 6 5 6 6 7 3 7
+'''
+
+def DFS(s, n):                          # s: 시작정점 n: 정점개수(1번부터인 정점의 마지막)
+    visited = [0]*(n+1)                 # 방문한 정점을 표시
+    stack = []                          # 스택 생성
+    print(s)
+    visited[s] = 1                      # 시작 정점 방문 표시
+    v = s                               # 지점 설정
+    while True:
+        for w in adjL[v]:               # v에 인접하고 방문 안 한 w 가 있으면
+            if visited[w] == 0:
+                stack.append(v)         # 현재 정점 push
+                v = w                   # w에 방문
+                print(v)
+                visited[w] = 1          # 방문 표시
+                break                   # for w... v부터 다시 탐색
+        else:                           # 남은 인접 정점이 없어서 break 없는 경우 => 요소를 다 돌고 나서
+            if stack:                   # 스택에 남은 게 있으면
+                v = stack.pop()         # 이전 갈림길을 스택에서 꺼내서
+            else:                       # 되돌아갈 곳이 없으면(남은 갈림길이 없으면)
+                break                   # while True... 탐색 종료
+
+T = int(input())
+for tc in range(1, T+1):
+    v, E = map(int, input().split())    # v: 현재정점 E: 간선 수 (연결된 길)
+    adjL = [[] for _ in range(v+1)]     # 인접 정점 리스트를 구하기 위함
+    arr = list(map(int, input().split()))
+    for i in range(E):                  # 간선에서 두 개씩 가져오는 작업
+        v1, v2 = arr[i*2], arr[i*2+1]
+        adjL[v1].append(v2)             # adjL이 비어있는 상테에서 1번행의 2번 열에 append --> 가는 방향
+        adjL[v2].append(v1)             # 오는 방향 추가
+        # [[], [2, 3], [1, 4, 5], [1, 7], [2, 6], [2, 6], [4, 5, 7], [6, 3]] 각 요소 index가 출발점
+    DFS(1, 7)
+```
+
+- 그래프 : 노드(정점)와 노드들을 연결하는 간선으로 구성된 자료구조
+          탐색(DFS, BFS), 최단 경로 찾기(다익스트라), 최소 신장 트리
+
+- Adv : 완전 탐색을 기반으로 어느 상황에서든 "에러 없이" 돌아가는 프로그램을 작성할 수 있는가
+
+- DFS : 한 경로를 끝까지 탐색한 후 다음 경로로 넘어가는 방식
+        '모든 경로'를 돌려보는 게 가능 --> 모든 경우의 수를 확인
+- BFS : 시작점에서 가까운 노드부터 차례대로 탐색하는 방식
+        '최대한 적은 노드'를 돌려서 가는 경로 --> 퍼져나가는 형태 구현 경우
+
+- path(흔적) 배열 --> used 배열, visited 배열
+  - 목적 : '이미 방문한 노드'를 기록하는 역할 - 미로 탐험 시 지나온 길 표시
+    1. 무한 루프 방지 : 같은 노드 계속 방문 방지
+    2. 중복 방문 방지 : 불필요한 연산 줄임
+  - 구현 : boolean 배열을 구현하고, 각 노드에 대해 True(1) or False(0)를 표시
+
+![](image-77.png)
+
+1 2 1 3 2 4 2 5 6 5 6 6 7 3 7
+
+- 단방향 그래프와 양방향 그래프
+  - 단방향: 한 방향으로만 전진 가능(백 트래킹은 가능)
+  - 양방향: 다양한 방향으로 전진 가능(예: 밑에서 위로)
+
+1) 단방향
+1 : 루트 노드
+1의 첫 번째 자식 2
+2의 첫 번째 자식 4
+4의 첫 번째 자식 6 -> 자식 끝
+
+6에서 더 이상 방문하지 않은 자식이 없는 상황
+
+돌아가야함 -> 백 트래킹
+
+2로 백 트래킹
+2의 두 번째 자식 5
+2로 백 트래킹
+1로 백 트래킹
+1의 두 번째 자식 3
+3의 첫 번째 자식 7
+
+1 2 4 6 2 5 2 1 3 7
+
+2) 양방향
+1 : 루트 노드
+1의 첫 번째 자식 2
+2의 첫 번째 자식 4
+4의 첫 번째 자식 6 -> 자식 끝
+
+6 -> 5
+5 -> 6
+6 -> 7
+7 -> 3
+
+1 2 4 6 5 7 3 
+
+
+
+* 재귀호출과 n중 반복문
+
+ex1. 숫자 출력 - 2중 for문 => 순열 코드
+```python
+for a in range(1,4):
+    for b in range(1,4):
+        print(a, b)
+```
+
+ex2. 숫자 출력 - 4중 for 문 => 순열 코드
+```python
+for a in range(1, 4):
+    for b in range(1, 4):
+        for c in range(1, 4):
+            for d in range(1, 4):
+                print(a, b, c, d) # 경로
+```
+
+N = 2 일때 2중
+3일때 3중 ... 식으로 적을 수 있을까?
+--> 적을 수 있지만 횟수가 너무 많아짐 ---> 재귀호출로 가능
+
+
+
+함수 특징1: 함수를 호출할 때 int 타입 객체를 전달하면 값만 복사된다.
+
+```python
+def KFC(x):
+    x = x + 1
+
+x = 3
+KFC(x) # x = 4
+print(x) # 3 -> 값만 복사한 것
+
+
+
+def KFC2(x):
+    print(x)
+    x += 1
+    print(x)
+
+x = 3
+KFC(x + 1)
+# 4
+# 5
+print(x)
+# 3
+```
+
+함수 특징2: 함수가 끝나면 main이 아닌 해당 함수를 호출했던 곳으로 돌아옴
+
+```python
+def BTS(x):
+    print(x)
+
+def KFC(x):
+    print(x)
+    x += 1
+    BTS(x+5)
+    print(x)
+
+x = 3
+KFC(x+5)
+print(x)
+
+'''
+8
+14
+9
+3
+'''
+```
+
+```python
+def BBQ(x):
+    x += 10
+    print(x)
+
+def KFC(x):
+    print(x)
+    x += 3
+    BBQ(x + 2)
+    print(x)
+
+x = 3
+KFC(x + 1)
+print(x)
+
+'''
+4
+19
+7
+3
+'''
+```
+
+무한 재귀호출 예시
+```python
+def KFC(x):
+    return KFC(x+1)
+
+KFC(0)
+# RecursionError: maximum recursion depth exceeded
+
+print('끝')
+```
+=> 재귀 에러 발생(무한 재귀에 들어감)
+
+무한 재귀호출을 막아야함 -> if 기저조건(base case) 두어야 함
+
+```python
+def KFC(x):
+    if x == 2:
+        return
+    print(x)
+    KFC(x+1)
+    print(x)
+
+KFC(0) # 0 1 1 0
+print('끝')
+```
+
+
+```python
+
+def BGK(x):
+    if x == 6:
+        return
+    print(x, end=" ")
+    BGK(x+1)
+    print(x, end=" ")
+
+BGK(0) # 0 1 2 3 4 5 5 4 3 2 1 0
+```
+
+재귀 호출 코드가 늘어날 수록 가짓수가 늘어남
+
+```python
+def KFC(x):
+    if x == 3:      # 3 : level
+        return
+
+    KFC(x + 1)      # 재귀호출의 개수: branch
+    KFC(x + 1)
+    KFC(x + 1)
+    KFC(x + 1)
+
+KFC(0)
+
+
+def KFC(x):
+    if x == 3:
+        return
+    
+    for i in range(4):
+        KFC(x + 1)
+
+KFC(0)
+```
+
+
+```python
+def run(level):
+    if  level == 3:
+        return
+
+    for i in range(2):
+        run(level+1)
+
+run(0)
+```
+
+
+***순열***
