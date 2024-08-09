@@ -581,13 +581,13 @@ print()
 - "&" : 비트 단위로 AND 연산
 - "|" : 비트 단위로 OR 연산
 - "<<" : 피연산자의 비트열을 왼쪽으로 이동
-- ">>" : 피연산자의 비트열을 오른쪽으로 이동
+- ">>=" : 피연산자의 비트열을 오른쪽으로 이동
 
 연산 기본
 1) 비트 이동 연산(<<)
     1 << 3 --> 이진수 1을 왼쪽으로 3칸 밀기 --> 2진수 1000, 10진수 8
 2) 비트 AND 연산(&)
-    두 이진수의 각 자라를 비교하여, 둘 다 1이면 1, 그렇지 않으면 0
+    두 이진수의 각 자리를 비교하여, 둘 다 1이면 1, 그렇지 않으면 0
     ex) 1100 & 0101 == 0100
 
 #### << 연산자(쉬프트 연산자)
@@ -1751,3 +1751,440 @@ def checknode(v):
 ![alt text](image-82.png)
 
 ## 부분집합
+- powerset: 공집합과 자기 자신을 포함한 모든 부분집합, 2**n개의 원소
+
+```python
+# loop 활용
+bit = [0, 0, 0, 0]
+for i in range(2):              # 0번째 원소
+    bit[0] = i
+    for j in range(2):          # 1번째 원소
+        bit[1] = j
+        for k in range(2):      # 2번째 원소
+            bit[2] = k
+            for m in range(2):  # 3번째 원소
+                bit[2] = m
+                print(bit)
+```
+
+### 백트래킹 활용한 알고리즘
+![alt text](image-84.png)
+
+```python
+def backtrack(a,k,n): # a: 주어진 배열, k: 결정할 원소(배열 내 인덱스), n: 원소 개수 --> level
+    c = [0] * MAXCANDIDATES # 최대 몇 개의 후보(branch)를 가질 수 있는지 저장
+
+    if k == n: 
+        process_solution(a, k) # 답이면 원하는 작업을 함
+    else:
+        # ncandidaes : 추천된 후보 수 --> 남은 branch 수 # c : 후보 추천 및 저장
+        ncandidates = construct_candidates(a, k, n, c) # 첫 후보군은 3개
+        for i in range(ncandidates):
+            a[k] = c[i]
+            backtrack(a, k + 1, n)
+
+def construct_candidates(a, k, n, c): # ????
+    c[0] = True
+    c[1] = False
+    return 2
+
+def process_solution(a, k):
+    for i in range(k):
+        if a[i]:
+            print(num[i], end="")
+    print()
+
+MAXCANDIDATES = 2
+NMAX = 4
+a = [0] * NMAX
+num = [1, 2, 3, 4]
+backtrack(a, 0, 3)
+'''
+1234
+123
+124
+12
+134
+13
+14
+1
+234
+23
+24
+2
+34
+3
+4
+
+
+Process finished with exit code 0
+'''
+```
+
+## 순열
+- 가능한 모든 순서를 늘어놓는 것, 경우의 수 n!
+- 조합, 부분집합, 순열을 분별할 것
+
+예: 집합{1, 2, 3}에서 모든 순열을 생성하는 함수
+```python
+for i1 in range(1, 4):
+    for i2 in range(1, 4):
+        if i2 != i1: # 중복 제거
+            for i3 in range(1, 4):
+                if i3 != i1 and i3 != i2: # 중복 제거
+                    print(i1, i2, i3)
+```
+![alt text](image-85.png)
+
+```python
+def backtrack(a, k, n):
+    c = [0] * MAXCANDIDATES
+
+    if k == n:
+        for i in range(0, k):
+            print(a[i], end=" ")
+        print()
+    else:
+        ncandidates = construct_candidates(a, k, n, c)
+        for i in range(ncandidates):
+            a[k] = c[i]
+            backtrack(a, k+1, n)
+
+def construct_candidates(a, k, n, c):
+    in_perm = [False] * (NMAX + 1)
+    # in_perm: 내가 후보군으로 줄 수 있는 것을 최대 크기 -> 예 n -> 4일때 [0, 1, 2, 3, 4]
+    # +1 한 이유는 k번째 인덱스 맞춰주기 위함
+    # 일종의 카운트 배열, 다만 사용 됐냐 아니냐 이므로 T/F
+    # perm -> permutation
+    # in_perm = used
+
+    # a[0] ~ a[k-1] 중 한 번도 사용된 적이 없는 후보를 추천해야함
+    for i in range(k):
+        in_perm[a[i]] = True
+
+    ncandidates = 0
+    for i in range(1, NMAX + 1):
+        if in_perm[i] == False: # 해당 요소가 사용된 적 있는지 -> 모든 사용한 적 없는 배열에서
+            c[ncandidates] = i # 사용된 적 없는 요소를 넣어줌
+            ncandidates += 1 # 추천된 후보 갯수 +1
+    return ncandidates
+
+MAXCANDIDATES = 3
+NMAX = 3
+a =[0] * NMAX
+backtrack(a, 0, 3) # a: 후보군 부를 배열, 0: 시작점, 3: level
+```
+
+## 가지치기(Prunning)
+
+```python
+# 부분집합의 합
+def f(i, K):    # bit[i]를 결정하는 함수
+    if i == K : # 모든 원소에 대해 결정하면
+        s = 0   # 부분집합의 합을 저장
+        for j in range(K):
+            if bit[j]: # 0이 아니면 -> 0이 아닌 모든 것이 참이므로
+                print(a[j], end = " ") # 같은 부분집합 원소 한 행에
+                s += a[j]
+        print(' : ', s) # 줄바꾸기
+    else: # i를 쓸 때 아닐 때를 모두 구함
+        # bit[i] = 1
+        # f(1+i, K)
+        # bit[i] = 0
+        # f(1+i, K)
+        for j in [1, 0]:
+            bit[i] = j
+            f(i+1, K)
+
+
+N = 3
+a = [1, 2, 3]   # 주어진 원소의 집합
+bit = [0] * N   # 원소의 포함여부를 표시하는 배열
+
+f(0, N)         # N개의 원소에 대해 부분집합을 만다는 합수
+
+
+'''
+1 2 3  :  6
+1 2  :  3
+1 3  :  4
+1  :  1
+2 3  :  5
+2  :  2
+3  :  3
+ :  0
+'''
+
+```
+
+![alt text](image-86.png)
+
+![alt text](image-87.png)
+
+bit[i] 가 1 또는 0이면
+-> 포함할지 안 할지가 결정이 되면 그때까지의 부분집합의 합을 구할 수 있음
+
+![alt text](image-88.png)
+
+![alt text](image-89.png)
+
+```py
+# i-1원소까지 고려한 합 s, 찾으려는 합 t
+
+f(i, N, s, t):
+        if s == t # i -1원속까지의 합이 찾는 값인 경우 -> 돌아가
+        elif i == N # 모든 원소에 대해 고려가 끝난 경우 -> 못 찾음
+        elif s > t # 지난 경우
+        elif s + rs < T # 남은 구간의 합이 목표치보다 낮은 경우
+        else       # 남은 원소가 있고 s < t인 경우
+            subset[i] = 1
+            f(i+1, N, s+A[i], t) # i 포함 -> 이전까지의 합에 합을 더함
+            subset[i] = 0
+            f(i+1, N, s, t) # i 원소 미포함
+```
+
+- 가지치기 연습문제
+
+```python
+# {1,2,3,4,5,6,7,8,9,10} 중 원소의 합이 10인 부분집합
+def f(i, k, s, t): # i: 원소, k 집합의 크기, s -> i-1까지의 합, t: 목표
+    global cnt
+    global fcnt
+    fcnt += 1
+    if s > t:
+        return
+    if s == t:
+        cnt += 1
+        return
+    if i == k: # 다 돌았을 때, 모든 원소 고려
+        return
+    else:
+        bit[i] = 1
+        f(i+1, k, s + A[i], t)
+        bit[i] = 0
+        f(i + 1, k, s, t)
+
+N = 10
+A = [i for i in range(1, N+1)]
+
+key = 10 # 찾으려 하는 합계 값
+cnt = 0 # 합이 key와 같은 경우인 부분집합의 수
+bit = [0] * N
+fcnt = 0 # 총 순회 횟수
+f(0,N,0,key)
+print(cnt, fcnt) # 10 349
+# 만약 가지치기 안 했으면 2047ㄴ
+```
+
+- 참고: [1, 2, 3] 의 모든 요소를 사용한 순열
+![alt text](image-90.png)
+
+
+
+***부분집합***
+1. 완전탐색 - 재귀호출 이용, 실전보다는 학습용으로 추천
+
+path 등록 -> path와 원래 배열 연결
+
+2. Binary Counting - 2진수, 비트연산 이용
+집합의 총 갯수 -> 2**n ==> 1<<n을 통해 빠르게 구할 수 있음 -> "<<" 해당 진수에서 칸을 옮겨버림
+
+
+```python
+# 문제 : A, B, C로 만들 수 있는 부분집합을 바이너리 카운팅으로 풀기
+arr = ['A', 'B', 'C']
+n = len(arr)
+
+def get_sub(tar): # tar: 출력하고자 하는 십진수(부분집합의 경우의 수)
+    for i in range(n): #집합 원소 갯수만큼
+        if tar & 0x1: # 0x1 --> 16진수, 고정(00001)
+            print(arr[i], end="")
+        tar >>= 1 # target을 오른쪽으로 한 번씩 밀기, 검사를 마친 한 자리 제거
+
+for tar in range(0, 1 << n):
+    print('{', end="")
+    get_sub(tar)
+    print('}')
+
+# 도전문제
+arr = ['A','B','C','D','E']
+n = len(arr)
+
+# 총 몇 개의 bit가 1로 되어있는지 확인하는 함수
+def get_sub(tar):
+    cnt = 0
+    for i in range(5):
+        if tar & 0x1:
+            cnt += 1
+            # print(arr[i], end="")
+        tar >>= 1 # 검사를 마친 후 자리 제거
+    return cnt
+
+result = 0
+for tar in range(0, 1 <<n):
+    if get_sub(tar) >=2 : #bit가 2개 이상 1일이라면
+        result += 1
+print(result)
+```
+
+***조합***
+
+- 조합(combination): 서로 다른 n개의 원소 중 r개를 순서없이 골라 낸 것
+
+{A,B,C,D,E} 중 3명을 뽑을 수 있는 경우
+ABC
+ABD
+ABE
+ACD
+ACE
+ADE
+BCD
+BCE
+BDE
+CDE
+
+
+
+```python
+## 조합
+
+arr = ['A','B','C','D','E']
+
+# level: n, branch: 최대 5개
+
+for a in range(5):
+    start1 = a+1
+    for b in range(start1, 5):
+        start2 = b + 1
+        for c in range(start2, 5):
+            print(arr[a], arr[b], arr[c])
+
+
+# 다섯 명 중 n 명 뽑는다 -> branch = 5, level = n
+
+path = []
+n = 3
+def run(lev, start):
+    if lev == n:
+        return
+
+    for i in range(start, 5):
+        path.append(arr[i])
+        run(lev + 1, i + 1) # 중첩 for 문 느낌
+        path.pop()
+
+run(0,0)
+```
+
+
+```python
+1. 완전탐색(중복순열)
+# branch -> 2 (뽑거나 안 뽑거나), level -> n(집합의 원소와 갯수
+
+
+# 2. binary counting
+# n개의 원소를 뽑는 방법 -> 2**n
+# 1 << n == 2 ** n
+
+# 문제 : A, B, C로 만들 수 있는 부분집합을 바이너리 카운팅으로 풀기
+arr = ['A', 'B', 'C']
+n = len(arr)
+
+def get_sub(tar): # tar: 출력하고자 하는 십진수(부분집합의 경우의 수)
+    for i in range(n): #집합 원소 갯수만큼
+        if tar & 0x1: # 0x1 --> 16진수, 고정(001)
+            print(arr[i], end="")
+        tar >>= 1 # target을 오른쪽으로 한 번씩 밀기, 검사를 마친 한 자리 제거
+
+for tar in range(0, 1 << n):
+    print('{', end="")
+    get_sub(tar)
+    print('}')
+
+# 도전문제
+arr = ['A','B','C','D','E']
+n = len(arr)
+
+# 총 몇 개의 bit가 1로 되어있는지 확인하는 함수
+def get_sub(tar):
+    cnt = 0
+    for i in range(5):
+        if tar & 0x1:
+            cnt += 1
+            # print(arr[i], end="")
+        tar >>= 1 # 검사를 마친 후 자리 제거
+    return cnt
+
+result = 0
+for tar in range(0, 1 <<n):
+    if get_sub(tar) >=2 : #bit가 2개 이상 1일이라면
+        result += 1
+print(result)
+
+
+## 조합
+
+arr = ['A','B','C','D','E']
+
+# level: n, branch: 최대 5개
+
+for a in range(5):
+    start1 = a+1
+    for b in range(start1, 5):
+        start2 = b + 1
+        for c in range(start2, 5):
+            print(arr[a], arr[b], arr[c])
+
+
+# 다섯 명 중 n 명 뽑는다 -> branch = 5, level = n
+
+path = []
+n = 3
+def run(lev, start):
+    if lev == n:
+        return
+
+    for i in range(start, 5):
+        path.append(arr[i])
+        run(lev + 1, i + 1) # 중첩 for 문 느낌
+        path.pop()
+
+run(0,0)
+
+# 주사위 던지기
+# 주사위 N 개를 던져서 나올 수 있는 모든 조합 출력
+# level: n개, branch: 6
+
+
+arr = [1, 2, 3, 4, 5, 6]
+n = 3
+path = []
+
+def run(lev, start):
+    if lev == n:
+        print(path)
+        return
+
+    for i in range(start, 6):
+        path.append(arr[i])
+        run(lev+1, i)
+        path.pop()
+
+run(0, 0)
+
+## arr 없는 버전
+n = 3
+path = []
+
+def run(lev, start):
+    if lev == n:
+        print(path)
+        return
+
+    for i in range(start, 7):
+        path.append(i)
+        run(lev+1, i)
+        path.pop()
+
+run(0, 1)
+```
