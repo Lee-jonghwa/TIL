@@ -2188,3 +2188,318 @@ def run(lev, start):
 
 run(0, 1)
 ```
+
+
+
+# Queue(큐)
+
+## 큐의 특성
+- 스택과 마찬가지로 삽입과 삭제의 위치가 제한적인 자료구조
+- 큐의 뒤에서는 삽입, 앞에서는 삭제만 이루어짐
+- FIFO(First In First Out): 큐에 삽입한 순서대로 원소가 저장되어, 가장 먼저 삽입된 원소는 가장 먼저 삭제
+![alt text](image-91.png)
+--> front: 꺼내진 자리(삭제된 위치)나 꺼내 질 자리
+--> rear: 저장위치
+
+
+
+## 큐의 주요 연산
+- enQueue(item): 큐의 rear 다음에 원소를 삽입하는 연산
+  - rear을 하나 증가시키고, 한 요소를 삽입
+- deQueue(): 큐의 front에서 원소를 삭제하고 반환하는 연산
+  - front를 하나 증가시키고, 요소를 제거 => front는 꺼내진 자리를 가리킴
+- createQueue(): 공백 상태의 큐를 생성하는 연산
+  - 크기가 정해진 큐를 생성
+  - 초기상태--> front = rear = -1 ==>큐가 비어있음
+- isEmpty(): 큐가 공백상태인지를 확인하는 연산
+- ifFull(): 큐가 포화상태인지를 확인하는 연산(???)
+- Qpeek(): 큐의 front에서 원소를 삭제없이 반환하는 연산
+![alt text](image-93.png)
+![alt text](image-94.png)
+  - 7)에서는 모든 요소가 꺼내졌으므로 Queue가 비어있는 상태
+
+## 선형큐
+1) 1차원 배열을 이용한 큐
+   - 큐의 크기 = 배열의 크기
+   - front 저장된 첫 번째 원소의 인덱스
+   - rear: 저장된 마지막 원소의 인덱스
+2) 상태 표현
+   - 초기상태: front = rear = -1
+   - 공백상태: front == rear
+   - 포화상태: rear == n-1(n: 배열의 크기, n-1: 배열의 마지막 인덱스)
+3) 초기 공백 큐
+   - 크기가 n인 1차원 배열 생성
+   - front와 rear를 -1로 초기화
+```python
+
+N = 10
+q = [0] * 10
+front = -1
+rear = -1
+
+# euQueue(1)
+rear += 1
+q[rear] = 1
+# euQueue(2)
+rear += 1
+q[rear] = 2
+# euQueue(3)
+rear += 1
+q[rear] = 3
+
+print(q)  # [1, 2, 3, 0, 0, 0, 0, 0, 0, 0]
+
+# deQueue()
+front += 1
+print(q[front])  # 1
+front += 1
+print(q[front])  # 2
+front += 1
+print(q[front])  # 3
+
+q2 = []
+q2.append(10)
+q2.append(20)
+
+print(q2.pop(0))  # 10
+print(q2.pop(0))  # 20
+print(q2)  # []
+```
+
+### 큐의 구현
+
+#### enQueue(item); 삽입
+- 마지막 원소 뒤에 새로운 원소를 삽입하기 위해
+    1) rear값을 하나 증가, 새로운 원소를 삽입합 자리 마련
+    2) 그 인덱스에 해당하는 배열원소 Q[rear]에 item 저장
+
+```C
+def enQueue(item):
+    global rear
+    if isFull():
+        print('Queue_Full')
+    else:
+        rear <- rear + 1;
+        Q[rear] <- item;
+```
+
+#### deQueue(); 삭제
+- 가장 앞에 있는 원소를 삭제하기 위해
+    1) front 값을 하나 증가시켜 큐에 남아있는 첫번째 원소 이동
+    2) 새로운 첫 번째 원소를 리턴함으로써 삭제와 동일한 기능 함
+
+```C
+def deQueue():
+    if(isEmpty()) then Queue_Empty();
+    else{
+        front <- front + 1;
+        return Q[front];
+    }
+```
+
+#### isEmpty(), isFull*(); 공백상태 및 포화상태 검사
+- 공백상태: front == rear
+- 포화상태: rear == n-1
+
+```python
+def isEmpty():
+    return front == rear
+
+def isFUll():
+    return rear == len(Q) - 1
+```
+
+
+#### Qpeek(); 검색
+- 가장 앞에 있는 원소를 검색하여 반환하는 연산
+- 현재 front의 한 자리 뒤(front + 1)에 있는 원소, 즉 큐의 첫 번째에 있는 원소를 반환
+
+```python
+def Qpeek():
+    if isEmpty(): print('Queue Empty')
+    else: return Q[front+1]
+```
+
+
+## 원형큐
+
+### 선형 큐의 문제점: 잘못된 포화상태 인식
+- 선형큐를 이용하여 원소의 삽입과 삭제를 계속할 경우, 배열의 앞 부분에 활용할 수 있는 공간이 있어도,
+  rear = n-1인 상태, 즉 포화상태로 인식하여 더 이상의 삽입을 수행하지 않게됨
+![alt text](image-95.png)
+1) 해결방법1
+   - 매 연산이 이루어질 때마다 저장된 원소들을 배열의 앞 부분으로 이동
+     -> 원소 이동에 많은 시간이 소요되어 큐의 효율성 급격히 떨어짐
+2) 해결방법2
+   - 1차원 배열을 사용하되, 논리적으로는 배열의 처음과 끝이 연결되어 원형 형태 이룬다고 가정
+![alt text](image-96.png)
+==> 10개짜리 배열일 때 15개 -> 10개를 넘은 부분부터는 다시 0으로 되돌아 감
+
+### 원형큐의 구조
+1) 초기 공백상태: front = rear = 0
+2) index의 순환
+    - front와 rear의 위치가 배열의 마지막 인덱스인 n-1을 가리킨 후, 그 다음엔 논리적 순환을 이루어 배열의 처음 인덱스로
+    - mod 연산
+3) front 변수: 공백 상태와 포화상태를 쉽게 구분하기 위해 front는 항상 비어있도록
+4) 삽입 위치 및 현재 위치
+![alt text](image-97.png)
+
+### 원형큐의 연산과정
+![alt text](image-99.png)
+- front 다음 자리를 비우고, front를 그 비어있는 자리로 이동
+
+![alt text](image-98.png)
+- 원형큐는 front를 비우기 때문에 위 상황이 Full인 상태
+- 원형큐가 가득 찼다면? --> 정책 필요
+  e.g.: 현재 기준 지난 24시간의 온도 -> 24시간이 지났다면 --> 이후 1시간이 지나면 가장 이전 1시간을 제거
+  또는 다른 제거 방법을 생각할 수도 있음
+
+### 원형 큐의 구현
+1) 초기 공백 큐 생성
+   - 크기 n인 1차원 배열 생성
+   - front = rear = 0
+2) isEmpty(), isFull(); 공백상태 및 포화상태 검사
+   - 공백 상태: front == rear
+   - 포화 상태: 삽입할 rear의 다음 위치 == 현재 front
+     - (rear+1) mod n == front
+```python
+def isEmpty():
+    return front == rear
+
+def isFull():
+    return (rear + 1) % len(cQ) == front
+```
+3) enQueue(item); 삽입
+    - rear 값을 조정하여 새로운 원소를 삽입할 자리 마련 --> rear <- (rear+1) mod n;
+    - 그 인덱스에 해당하는 배열원소 cQ[rear]에 item을 저장
+```python
+def enQueue(item):
+    global rear
+    if isFUll():
+        print('Queue_Full')
+    else:
+        rear = (rear + 1) % len(cQ)
+        cQ[rear] = item
+```
+4) deQueue(), delete(); 삭제
+
+```python
+def deQueue():
+    global front
+    if isEmpty():
+        print("Queue_Empty")
+    else:
+        front = (front + 1) % len(cQ)
+        return cQ[front]
+```
+
+
+```python
+cQ = [0] * 4
+front = rear = 0
+cQ_Size = 4
+
+# enQueue(1)
+rear = (rear + 1) % cQ_Size
+cQ[rear] = 1
+# enQueue(2)
+rear = (rear + 1) % cQ_Size
+cQ[rear] = 2
+# enQueue(3)
+rear = (rear + 1) % cQ_Size
+cQ[rear] = 3
+
+print(cQ)  # [0, 1, 2, 3]
+
+# deQueue()
+front = front + 1
+print(cQ[front])  # 1
+
+# deQueue()
+front = front + 1
+print(cQ[front])  # 2
+
+# deQueue()
+front = front + 1
+print(cQ[front])  # 3
+```
+
+
+## 연결 큐
+
+### 연결 큐의 구조
+1) 단순 연결 리스트(Linked List)를 이용한 큐
+   - 큐의 원소: 단순 연결 리스트의 노드
+   - 큐의 원소 순서: 노드의 연결 순서. 링크로 연결되어 있음
+   - front: 첫 번째 노드를 가리키는 링크
+   - rear: 마지막 노드를 가리키는 링크
+2) 상태 표현
+   - 초기 상태: front = rear = null
+   - 공백 상태: front = rear = null
+![alt text](image-100.png)
+  -> 한 원소와 다음 번 원소의 노드(메모리 주소)를 가지고 있음
+  -> null --> 레퍼런스가 없는, 주소값이 없는 상태
+
+### 연결 큐의 연산 과정
+1) 공백 큐 생성: createLinkedQueue()
+
+    ![alt text](image-101.png)
+2) 삽입: enQueue()
+
+    ![alt text](image-102.png)
+3) 삭제: deQueue()
+
+    ![alt text](image-103.png)
+
+
+## Deque(덱)
+--> 사이즈가 큰 Queue를 할 땐 deque이 편함
+- 컨테이너 자료형 중 하나
+- deque 객체: 양쪽 끝에서 빠르게 추가와 삭제를 할 수 있는 리스트류 컨테이너
+
+### 덱 연산
+- append(x): 오른쪽에 x 추가
+- popleft(): 왼쪽에서 요소를 제거하고 반환. 요소가 없으면 IndexError
+
+```python
+from collection import deque
+
+q = deque()
+q.append(1)
+t = q.popleft()
+```
+
+## Priority Queue
+1) 우선순위 큐의 특성
+   - 우선순위를 가진 항목들을 가진 큐
+   - FIFO가 아닌, 우선 순위가 높은 순서대로 나감
+2) 우선순위 큐의 적용 분야
+   - 시뮬레이션 시스템
+   - 네트워크 트래픽 제어
+   - 운영체제의 태스크 스케쥴링
+3) 우선순위 큐의 구현: 배열 또는 리스트를 이용하여 구현
+4) 우선순위 큐의 기본 연산
+   ![alt text](image-104.png)
+   현재 우선순위가 가장 높은 요소만 앞 쪽, 나머지는 별로 상관 없음
+
+
+### 배열을 이용한 우선순위 큐
+1) 배열을 이용하여 우선순위 큐 구현
+   - 배열을 이용하여 자료 저장
+   - 원소를 삽입하는 과정에서 우선순위 비교
+   - 가장 앞에 최고 우선순위 원소가 위치
+2) 문제점
+   - 배열을 사용하므로 삽입 삭제 연산이 일어날 때 원소 재배치 발생
+   - 소요되는 시간과 메모리 낭비가 큼
+
+
+## Buffer
+1) 버퍼
+   - 데이터를 한 곳에서 다른 한 곳으로 전송하는 동안 일시적으로 그 데이터를 보관하는 메모리의 영역
+   - 버퍼링: 버퍼를 활용하는 방식 또는 버퍼를 채우는 동작
+2) 버퍼의 자료 구조
+   - 일반적으로 입출력 및 네트워크와 관련된 기능에서 이용
+   - 순서대로 입/출력/ 전달이 되어야 하므로 FIFO방식인 Queue가 활용됨
+![alt text](image-105.png)
+
+## Queue 활용: 생산 라인
