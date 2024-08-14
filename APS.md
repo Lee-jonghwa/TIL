@@ -2503,3 +2503,94 @@ t = q.popleft()
 ![alt text](image-105.png)
 
 ## Queue 활용: 생산 라인
+
+
+
+## BFS(Breadth First Search); 너비 우선 탐색
+- 너비 우선 탐색: 탐색 시작점의 인접한 정점들을 먼저 모두 차례로 방문
+  --> 방문했던 정점을 시작점으로 하여 다시 인접한 정점들을 차례로 방문
+- 인접한 정점들에 대해 탐색을 한 후 차례로 다시 너비 우선 탐색을 진행
+  --> FIFO 방식인 Queue 활용
+
+![alt text](image-106.png)
+시작점 A -> 인접인 BCD를 다음에 처리(DFS는 한 인접을 깊이 처리) -> 다음으로 인접한(lev3) 정점들을 처리 EF -> GHI
+
+
+
+- 활용 -> 동시에 가장 많이 받을 수 있는 인원, 종이 뒤로 넘기기, 최단거리 구하기 등
+
+```python
+# BFS
+def BFS(G, v):                          # G: 그래프, v: 탐색시작 지점
+    visited = [0]*(n+1)                 # n: 정점의 갯수, visited의 인덱스를 맞춰주기 위함
+    queue = []                          # 큐 생성 ==> 인접한 요소를 확인하기 어려워 큐 사이즈 정하기 애매
+    queue.append(v)                     # 큐에 시작점 v 삽입(enqueue)
+    while queue:                        # 큐가 비어있지 않은 경우 -> 비게 되면 탐색 종료
+        t = queue.pop(0)                # 큐의 첫 번째 원소 반환(방문/처리할 노드 - dequeue)
+        if not visited[t]:              # 방문되지 않은 곳이라면
+            visited[t] = True           # 방문 표시
+            visit(t)                    # t에서의 처리 -> 예: 경로 출력
+            for i in G[t]:              # t와 연결된 i들에 대해
+                if not visited[i]:      # 방문되지 않은 곳이라면 --> visited 안 하면 다시 역행할 수도 있음
+                    queue.append(i)     # 큐에넣기
+```
+
+
+![alt text](image-107.png)
+
+-> c에 연결된 b는 아래로 보일 수도 있으나, BFS는 가까운 것 먼저 탐색
+
+```python
+# BFS
+def BFS(G, v):                          # G: 그래프, v: 탐색시작 지점
+    visited = [0]*(n+1)                 # n: 정점의 갯수, visited의 인덱스를 맞춰주기 위함
+    queue = []                          # 큐 생성
+    queue.append(v)                     # 큐에 시작점 v 삽입(enqueue)
+    visited[v] = 1                      # enqueue를 기준으로 visited check
+    while queue:                        # 큐가 비어있지 않은 경우 -> 비게 되면 탐색 종료
+        t = queue.pop(0)                # 큐의 첫 번째 원소 반환(방문/처리할 노드 - dequeue)
+        visit(t)                        # t에서의 처리
+        # 중복인 큐를 enqueue 단계에서 방지
+        for i in G[t]:                  # t와 연결된 i들에 대해
+            if not visited[i]:          # 방문되지 않은 곳이라면 -> 큐에 없으면
+                queue.append(i)         # 큐에넣기
+                visited[i] = visited[t] + 1  # n으로부터 1만큼 이동   ??????????
+```
+
+
+![alt text](image-108.png)
+
+
+```python
+"""
+7 8
+1 2 1 3 2 4 2 5 4 6 5 6 6 7 3 7
+"""
+def bfs(s, v): # 시작점 s, 정점수(마지막정점) v --> 마지막 정점이 꼭 goal은 아님
+    # 준비
+    visited = [0] * (v + 1)         # visited 생성
+    queue = []                      # queue 생성
+    queue.append(s)                 # 시작점 enqueue
+    visited[s] = 1                  # 시작점 방문(enqueue) 표시
+    # 탐색
+    while queue:                    # 큐가 비어있지 않으면, 탐색할 정점이 남아 있으면
+        t = queue.pop(0)            # deque
+        print(t)                    # 처리
+        for w in adjL[t]:           # t에 인접한 요소들
+            if visited[w] == 0:     # enqueue 된 적이 없으면
+                queue.append(w)     # enqueue 하고
+                visited[w] = 1      # enqueue 표시
+                #visited[w] = visited[t] + 1  # lev 나눌 때 사용 1 - 2 - 3
+
+
+
+v, E = map(int, input().split())  # v는 마지막 정점 번호
+arr = list(map(int, input().split())) # 간선 이어지는 리스트
+adjL = [[] for _ in range(v+1)]  # 인접 정점 리스트 # adjL[0] --> 0번 정점에 인접인 정점 ==> 1부터 시작되므로 v+1
+for i in range(E):
+    v1, v2 = arr[i*2], arr[i*2+1]
+    adjL[v1].append(v2)
+    adjL[v2].append(v1)  # 돌아오는 경우 추가(방향이 없는 경우) but 입력이 출발 도착일지 확인할 필요는 있음
+
+bfs(1, v)
+```
