@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 100px;
+      border: 2px solid black;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    .content-box{
+      /* 전체 너비 124: width + 양쪽 padding + 양쪽 border */
+      box-sizing: content-box;
+    }
+
+    .border-box{
+      /* 전체 너비 100: border를 포함한 전체 영역이 100*/
+      box-sizing: border-box
+    }
+  </style>
+</head>
+<body>
+  <!-- div.box{content-box}*2 -->
+  <div class="box content-box">content-box</div>
+  <div class="box border-box">border-box</div>
+</body>
+</html>

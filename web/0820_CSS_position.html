@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    p {
+      width: 500px;
+      height: 200px;
+      background-color: skyblue;
+      border: 1px solid black;
+      line-height: 2;
+    }
+
+    .container {
+      border: 2px solid black;
+      position: relative;
+      /* container가 부모태그로 있을 때
+      absolute의 position의 기준점이 됨 */
+    }
+
+    .static {
+      position: static;
+      background-color: lightgreen;
+      /* static은 기본값, Normal Flow 따름 */
+    }
+
+    .sticky {
+      position: sticky;
+      background-color: lightcoral;
+      /* 스크롤 시 top 위치에 고정
+      그 전까지는 Normal Flow 따름
+      */
+      top: 0px
+    }    
+
+    .relative{
+      position: relative;
+      background-color: lightsalmon;
+      left: 100px; /* 원래 위치를 기준으로 오른쪽 100px */
+      top: 200px; /* 원래 위치를 기준으로 아래쪽 200px */
+      /* relative는 원래 static 위치를 기준으로 변경 */
+    }
+
+    .absolute{
+      position: absolute;
+      /* relative를 가지고 있는 조상 기준 */
+      background-color: bisque;
+      right: 100px;
+      /* relative 조상 기준 왼쪽 100px */
+      top: 200px;
+      /* relative 조상 기준 아래쪽 100px */
+    }
+
+    .fixed{
+      /* 뷰포트를 기준으로 항상 같은 위치 고정 */
+      position: fixed;
+      background-color: lime;
+      width: 100px;
+      height: 100px;
+      right: 30px;
+      top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- div.container>p*5 -->
+  <div class = "container">
+    <p class = "static">---static box ---</p>
+    <p class = "sticky">---sticky box ---</p>
+    <p class = "relative">---relative box ---</p>
+    <p class = "fixed">---fixed box ---</p>
+    <p class = "absolute">---absolute box ---</p>
+  </div>
+</body>
+</html>

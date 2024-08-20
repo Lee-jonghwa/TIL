@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 단위 !중요!
+        px(픽셀): 화면에서 가장 기본 단위
+        rem: 상대적인 길이 단위(1rem : 16px)
+        %: 부모 요소의 크기의 상대적 비율
+        em: 부모 요소의 글꼴의 상대적 크기
+        */
+        
+        .box1{
+            /* width: content box의 너비  */
+            width: 200px;
+            padding-left: 25px;
+            padding-bottom: 25px;
+            margin-left: 25px;
+            margin-top: 50px;
+            /* 테두리 두께, 선의 종류, 선의 색 */
+            border: 3px solid black;
+            /* 둥근 테두리 50%시 타원 */
+            border-radius: 10%;
+        }
+
+        .box2{
+            width: 200px;
+            /* 패딩, 마진 기록 순서
+            4개 -> 상 우 하 좌
+            3개 -> 상 좌우 하
+            2개 -> 상하 좌우
+            1개 -> 상하좌우
+            */
+            padding: 25px 50px;
+            /* 좌우 auto -> 가운데정렬하도록 여백 자동 */
+            margin: 25px auto;
+            border: 1px dashed black;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Emmet (단축 명령어) -->
+    <!-- div.box1{box1} -->
+    <div class="box1">box1</div>    
+    <div class="box2">box2</div>    
+</body>
+</html>

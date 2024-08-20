@@ -59,6 +59,8 @@
 - CSS(Cascading Style Sheet): 웹페이의 디자인과 레이아웃을 구성하는 언어 
 ![alt text](image-1.png)
 
+- CSS Layout: 각 요소의 "위치"와 "크기"를 조정하여 웹 페이지의 디자인을 결정
+
 ## CSS 적용방법
 1. Inline 스타일: HTML 요소 안에 style 속성 값으로 작성
 2. Internal 스타일: head 태그 안에 style 태그에 작성
@@ -101,17 +103,7 @@
 
 **상속하지 않을 때 -> .outerbox > :not(.inner_box)**와 같이 작성
 
-
-## CSS Box Model
-- HTML 요소를 감싸는 사각형 상자 모델
-
-### 박스 배치 타입
-* 좌측 상단부터 시작 -> 오른쪽 또는 아래로 진행
-- Block box: 외부 / 아래로 표기, 새로운 태그를 만들 때 새 줄에서 시작
-    - div, p, h1, h2
-- Inline box: 내부 / 오른쪽으로 표기, 태그의 줄이 바뀌지 않음
-    - span, a, strong
-
+#### 0819 강사님 팁
 
 """
 nav>ul>li*5>a
@@ -121,3 +113,167 @@ style nav {background-color: gray; padding: 10px 0}
 padding은 요소 안의 여백
 margin은 요소 밖의 여백
 """
+
+
+## CSS Box Model
+- HTML 요소를 감싸는 사각형 상자 모델
+- content, padding, border, margin으로 구성
+
+### 박스 배치 타입
+* 좌측 상단부터 시작 -> 오른쪽 또는 아래로 진행
+- Block box: 외부 / 아래로 표기, 새로운 태그를 만들 때 새 줄에서 시작
+    - div, p, h1, h2
+- Inline box: 내부 / 오른쪽으로 표기, 태그의 줄이 바뀌지 않음
+    - span, a, strong
+
+### 박스 표시 타입
+#### Outer display type
+- 박스의 외부를 처리
+- 박스가 문서 흐름에서 어떻게 동작할지를 결정
+
+1) block
+```html
+.index{
+  display: block;
+}
+```
+- 항상 새로운 행으로 나뉨
+- width와 height 속성 사용 가능
+- padding, margin, border로 인해 다른 요소를 상자로부터 밀어냄
+- widht 속성을 지정하지 않으면 박스는 inline 방향으로 사용 가능한 공간 모두 차지(상위 컨테이너 너비 100%)
+- 대표적인 block 타입 태그: h1~6, p, div
+
+
+2) Inline
+
+```html
+.index{
+  display: block;
+}
+```
+- 새로운 행으로 넘어가지 않음
+- width와 height 속성 x
+- 수직방향: padding, margin, border가 적용되지만 다른 요소 밀어내지 못함
+- 수평방향: padding, margin, border가 적용되어 다른 요소 밀어냄
+- 대표적인 inline 태그: a, img, span, strong, em
+
+#### Inner display type: 박스의 내부를 처리
+- 박스 내부의 요소들이 어떻게 배치될지를 결정
+- 속성: flex
+
+#### 기타 display 속성
+1) inline-block
+  - inline과 block 요소 사이의 중간 지점을 제공하는 display 값
+  - width와 height 속성
+  - padding, margin 및 border로 인해 다른 요소가 상자에서 밀림
+  - 새로운 행으로 넘어가지 않음
+  ==> 요소가 줄바꿈 되는 것을 원하지 않으면서 너비와 높이를 적용하고 싶은 경우에 사용
+2) none
+
+### 박스 구성 요소
+![alt text](image-3.png)
+- Content: 콘텐츠가 표시되는 영역
+- Padding: 콘텐츠 주위에 위치하는 공백
+- Border: 콘텐츠와 패딩을 감싸는 테두리
+- Margin: 이 박스와 다른 요소 사이의 공백, 가장 바깥쪽 영역
+
+### shorthand 속성
+- 속성을 한 버번에 설정하기 위함
+
+1) border: 굵기, 종류, 색을 순서에 상관없이 작성
+```html
+border: 2px solid black;
+```
+2) margin & padding: 4방향의 속성을 각각 지정하지 않고 한 번에 지정
+```html
+<!-- 4개 - 상/우/하/좌 -->
+<!-- 3개 - 상/좌우/하-->
+<!-- 3개 - 상/좌우/하-->
+<!-- 3개 - 상/좌우/하-->
+
+```
+
+### box-sizing 속성
+CSS 기본은 content박스를 중심으로 사이즈를 정함 -> 실제 박스 크기와는 차이가 생김 --> 박스 사이즈를 border를 기준으로 설정하기 위한 것이 box-sizing
+
+
+## CSS Position
+
+- CSS Position: 요소를 Normal Flow에서 제거하여 다른 위치로 배치하는 것
+
+### Position 이동 방향
+![alt text](image-4.png)
+
+### Position 유형
+1) Static
+  - 요소를 Normal Flow에 따라 배치
+  - top, right, bottom, left 속성이 적용되지 않음
+  - 기본 값
+2) Relative
+  - 요소를 **Normal Flow에 따라 배치**
+  - 자신의 원래 위치(static)를 기준으로 이동
+  - top, right, bottom, left 속성이 적용
+  - 다른 요소의 레이아웃에 영향 주지 않음
+3) Absolute
+  - Normal Flow 에서 요소를 **제거**
+  - 가장 가까운 ***relative 부모 요소***를 기준으로 이동
+    - 만족하는 부모 요소가 없다면 body 태그 기준
+  - top, right, bottom, left 속성이 적용
+  - 문서에서 요소가 차지하는 공간이 없어짐
+4) Fixed
+  - 요소를 Normal Flow에서 제거
+  - 현재 화면영역(Viewport)을 기준으로 이동
+  - 스크롤해도 항상 같은 위치에 유지
+  - top, right, bottom, left 속성이 적용
+  - 문서에서 요소가 차지하는 공간이 없어짐
+5) Sticky
+  - relative와 fixed의 특성을 결합한 속성
+  - 스크롤 위치가 임계점에 도달하기 전에는 relative처럼 동작
+  - 특정 임계점에 도달하면 fixed처럼 동작하여 고정
+  - 만약 다음 sticky 요소가 나오면 다음 sticky 요소가 이전 sticky 요소를 대체
+
+### z-index
+  - 요소의 쌓임 순서(stack order)를 정의하는 속성
+  - 정수 값을 사용해 z축 순서를 지정
+  - 값이 클수록 요소가 위에 쌓이게 됨
+  - static이 아닌 요소에만 적용
+
+#### z-index의 특징
+  - 기본값 auto
+  - 부모 요소의 z-index값에 영향을 받음
+  - 같은 부모 내에서만 z-index 값을 비교
+  - 부모보다 위로 올라갈 수 없음
+  - 값이 같으면 HTML 문서 순서대로 쌓임
+
+## CSS Flexbox
+- CSS Flexbox: 요소를 행과 열 형태로 배치하는 1차원 레이아웃 방식
+  ==> 공간 배열 및 정렬을 진행함
+
+### Flexbox 구성 요소
+![alt text](image-5.png)
+
+  1) main axis(주 축)
+   - flex item 들이 배치되는 기본 축
+   - main start에서 시작해서 main end방향으로 배치
+  2) cross axis(교차 축)
+   - main axis에 수직인 축
+  3) flex container
+   - display: flex; 혹은 display: inline-flex;가 설정
+   - 1차 자식 요소들이 Flex item이 됨
+   - flex 속성 값들을 사용하여 자식 요소 Flex Item 들을 배치하는 주체 ==> item 값을 수정하는 게 X
+  4) flex item: Flex Container 내부에 레이아웃되는 항목
+
+### Flexbox 속성 목록
+
+#### 1. Flex Container 관련 속성
+
+#### 2. Flex Item 관련 속성
+
+![alt text](image-6.png)
+
+![alt text](image-7.png)
+
+flex grow -> 남은 여백 값을 주어진 값에 따라 나누어 분배
+![alt text](image-8.png)
+
+flex-basis가 width보다 우월
