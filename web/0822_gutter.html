@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    .box {
+    border: 1px solid black;
+    background-color: lightblue;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <!-- gutter의 크기는 g-0부터 g-5까지 있음, 숫자가 커질수록 간격이 넓어짐 -->
+  <!-- div.container>h2.text-center+div.row>div.col-6*4>div.box{col} -->
+  <div class="container text-center">
+    <h2 class="text-center">gutter</h2>
+    <div class="row g-5">
+      <div class="col-6">
+        <div class="box">col</div>
+      </div>
+      <div class="col-6">
+        <div class="box">col</div>
+      </div>
+      <div class="col-6">
+        <div class="box">col</div>
+      </div>
+      <div class="col-6">
+        <div class="box">col</div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
