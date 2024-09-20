@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% comment %} 
+GET과 POST의 비교
+1. GET: URL에 데이터가 노출, 사용이 간단함
+2. POST: URL에 데이터가 노출X(보안성 높음), 사용이 복잡함
+
+{% endcomment %}
+
+
+{% comment %} action = "요청 보낼 URL(서버의 주소)" {% endcomment %}
+<form action="https://search.naver.com/search.naver" method="GET">
+    <label for="message"> 검색어를 입력하세요 </label>
+    {% comment %} 우리가 input으로 입력한 text --> value
+    name --> key(query) {% endcomment %}
+    <input type="text" name="query">
+    <input type="submit">
+
+
+</form>
+
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% comment %} 템플릿 상속 {% endcomment %}
+{% comment %} 1번 줄에 extends가 없으면 상속이 안 될 때가 있음 {% endcomment %}
+
+{% block content %}
+    {% comment %} DTL 변수 출력 {% endcomment %}
+    {% comment %} {{}} : 콧수염 괄호 {% endcomment %}
+    <h1> Hello, {{ name }}</h1>
+    {% comment %} naming url patterns 예: name = dinner
+    {% url app_name:naming url 패턴 %}
+    {% endcomment %}
+
+    <ul>
+        <li>
+            <a href="{% url 'articles:dinner' %}"> dinner </a>
+        </li>
+        <li>
+            <a href="{% url 'articles:search' %}"> search </a>
+        </li>
+        <li>
+            <a href="{% url 'articles:throw' %}"> throw </a>
+        </li>
+        <li>
+            <a href="{% url 'articles:detail' number %}"> detail </a>
+        </li>
+    </ul>
+{% endblock content %}
+

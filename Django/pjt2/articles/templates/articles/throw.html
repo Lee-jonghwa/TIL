@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Throw</h1>
+
+{% comment %}
+url naming pattern
+{% url appname(namespace): url 패턴 %}  {% endcomment %}
+
+<form action="{% url 'articles:catch' %}" method = 'GET'>
+    {% comment %} name을 바꾸면 1. url 변경 2. request의 key가 변경 {% endcomment %}
+
+    <input type="text" name="throw">
+    <input type="submit">
+</form>
+
+
+{% endblock content %}

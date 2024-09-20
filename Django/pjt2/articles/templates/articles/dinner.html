@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% comment %} 1번 DTL filter {% endcomment %}
+
+    <p>{{ picked }} 메뉴는 {{picked | length}}글자 입니다.</p>
+
+    {% comment %} 2번 DTL FOR문 {% endcomment %}
+    <h2> 메뉴판 </h2>
+    <ul>
+        {% for food in foods %}
+        <li>{{food}}</li>
+        {% endfor %}
+    </ul>
+
+    {% comment %} 3번 DTL if 조건문 {% endcomment %}
+
+    {% comment %} |의 양옆을 띄우면 안 됨 {% endcomment %}
+    {% if foods|length == 0 %}
+        <p>메뉴가 소진되었습니다.</p>
+    {% else %}
+        <p>아직 메뉴가 남았습니다.</p>
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "articles/base.html" %}
+
+
+{% block content %}
+    <h1> Fake Naver </h1>
+    {% comment %} action에는 목적지 URL을 입력 {% endcomment %}
+    {% comment %} ? 뒤에 것은 쿼리스트링 파라미터 {% endcomment %}
+    {% comment %} method는 "GET" 이 기본 값 {% endcomment %}
+    <form action="https://search.naver.com/search.naver/" method='GET'>
+        {% comment %} input은 닫는 것 필요 없음 {% endcomment %}
+        <input type="text" name='query' id='message'>  
+        <input type="submit" value='submit'>
+    </form>
+{% endblock content %}
