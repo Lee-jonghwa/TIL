@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Create</h1>
+
+
+    {% comment %} new의 폼에 작성한 내용은
+    1. url의 create로 보내지며
+    2. views.py create함수의 request로 감 {% endcomment %}
+    <form action="{% url "articles:create" %}" method='POST'>
+        {% comment %} csrf 토큰: 보안 토큰(POST 방식) {% endcomment %}
+        {% csrf_token %}
+        {% comment %} .as_table, as.ul, as. {% endcomment %}
+        {{ form.as_p }}
+
+        
+        {% comment %}
+        <div>
+            {% comment %} title 
+            <label for="title">Title: </label>
+            {% comment %} for = "title"과 id="title"이 연결됨 -> label 클릭하면 커서 이동
+            name="title"과 views.py의 request.POST.get('title')과 연관 
+            <input type="text" name="title" id="title">
+        </div>
+
+        <div>
+            {% comment %} content 
+            <label for="content">Content: </label>
+            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        </div>
+        {% endcomment %}
+        <input type="submit">
+
+    </form>
+
+
+{% endblock content %}

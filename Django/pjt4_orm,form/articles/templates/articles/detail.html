@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2> DETAIL </h2>
+    {% comment %} view의 context의 key {% endcomment %}
+    <h3> {{ article.pk }} 번째 게시글 </h3>
+    <hr>
+    <p>제목: {{ article.title }} </p>
+    <p>내용: {{ article.content }} </p>
+    <p>작성일: {{ article.created_at }} </p>
+    <p>수정일: {{ article.updated_at }} </p>
+    <hr>
+    {% comment %}update{% endcomment %}
+    <a href="{% url "articles:update" article.pk %}">[EDIT]</a>
+    {% comment %} delete {% endcomment %}
+    <form action="{% url "articles:delete" article.pk %}" method=POST>
+        {% csrf_token %}
+        {% comment %} value는 초기값 초기 페이지에 뜨는 글을 DELETE로 하겠다. {% endcomment %}
+        <input type="submit" value="DELETE">
+    </form>
+    {% comment %} url naming pattern -> appname:path {% endcomment %}
+    <a href="{% url "articles:index" %}"> [HOME] </a>
+
+{% endblock content %}
