@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Create</h1>
+    <h1>게시글 생성</h1>
 
 
     {% comment %} new의 폼에 작성한 내용은
     1. url의 create로 보내지며
     2. views.py create함수의 request로 감 {% endcomment %}
-    <form action="{% url "articles:create" %}" method='POST'>
+    {% comment %} encytype = 'multpart/form-data' --> 폼 데이터와 함께 파일(이미지, 문서 등)을 서버에 전송 {% endcomment %}
+    <form action="{% url "articles:create" %}" method='POST' enctype = 'multipart/form-data'>
         {% comment %} csrf 토큰: 보안 토큰(POST 방식) {% endcomment %}
         {% csrf_token %}
         {% comment %} .as_table, as.ul, as. {% endcomment %}

@@ -19,6 +19,13 @@
         {% comment %} value는 초기값 초기 페이지에 뜨는 글을 DELETE로 하겠다. {% endcomment %}
         <input type="submit" value="DELETE">
     </form>
+
+    {% comment %} 이미지는 있을 수도 있고 없을 수도 있음 => DTL의 조건 문 사용 {% endcomment %}
+    {% if article.image %}
+        {% comment %} src에는 업로드된 이미지의 URL을 넣어야 한다 {% endcomment %}
+        <img src="{{article.image.url}}" alt="post_image">
+    {% endif %}
+
     {% comment %} url naming pattern -> appname:path {% endcomment %}
     <a href="{% url "articles:index" %}"> [HOME] </a>
 

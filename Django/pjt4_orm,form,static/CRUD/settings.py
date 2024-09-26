@@ -122,7 +122,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
+# 이미지 파일(static)을 웹에서 쓰는 방법 2가지
+# 1. 웹 페이지에 띄우는 용도 -> DIR : static
+# 2. 게시글에 업로드 -> ROOT : media
+
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    # 정적 파일이 저장될 directory 지정
+    BASE_DIR/ 'static',
+]
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR/ 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

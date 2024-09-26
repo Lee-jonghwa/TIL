@@ -27,7 +27,7 @@ def detail(request,pk):
 def create(request):
     # 게시글 생성 버튼을 눌렀을 때
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
         # 유효성 검사 대표 케이스
         # 1. 모든 필수 필드가 채워짐 여부
         # 2. 입력된 데이터가 필드의 조건(ex: 데이터 형식)을 만족하는지
@@ -85,7 +85,7 @@ def update(request,pk):
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
         # 기존 게시글의 데이터를 미리 채우기
-        form = ArticleForm(request.POST, instance=article)
+        form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
             article = form.save()
             return redirect('articles:detail', article.pk)
