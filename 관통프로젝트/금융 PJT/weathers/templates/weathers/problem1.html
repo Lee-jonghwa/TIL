@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid black;
+    }
+    th {
+      background-color: lightgray;
+    }
+  </style>
+
+  <h1>문제1. 데이터 읽어오기</h1>
+  {% comment %} table 안에 tr ---> th // tr ---> td {% endcomment %}
+  <table>
+    <tr>
+      {% for column in df.columns %}
+        <th>{{column}}</th>
+      {% endfor %}
+    </tr>
+    {% for row in df.values %}
+      <tr>
+        {% for value in  row%}
+          <td>{{value}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock content %}
