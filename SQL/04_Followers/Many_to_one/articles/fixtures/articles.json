@@ -1,0 +1,49 @@
+[
+{
+    "model": "articles.article",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "title": "첫 번째 게시글",
+        "content": "우아아아아아",
+        "image": "",
+        "created_at": "2024-10-11T05:22:56.866Z",
+        "updated_at": "2024-10-11T05:22:56.866Z",
+        "like_users": [
+            1,
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "title": "eeee",
+        "content": "가나다라",
+        "image": "",
+        "created_at": "2024-10-15T03:18:38.300Z",
+        "updated_at": "2024-10-15T03:18:38.300Z",
+        "like_users": [
+            2
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "title": "1111",
+        "content": "33333",
+        "image": "",
+        "created_at": "2024-10-15T05:58:41.907Z",
+        "updated_at": "2024-10-15T05:58:41.907Z",
+        "like_users": [
+            3
+        ]
+    }
+}
+]
