@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>DETAIL PAGE</h1>
+
+<div class="mb-4 p-3 bg-light">
+{{ movie.title }}
+{{ movie.description }}
+</div>
+
+<hr>
+<h3>댓글 목록</h3>
+  <ul class="list-group mb-3">
+  {% for comment in comments %}
+    <li class="list-group-item">
+    <p>{{ comment.content }}</p>
+    <small class='text-muted'>작성자: {{ comment.user }}</small>
+    {% if request.user == comment.user %}
+    <form action="{% url "movies:comments_delete" movie.pk comment.pk%}">
+      {% csrf_token %}
+      <button type="submit" class='btn btn-danger btn-sm'>댓글삭제</button>
+    </form>
+    </li>
+    {% endif %}
+  {% empty %}
+    <li class="list-group-item">
+      아직 댓글이 없어요
+    </li>
+  {% endfor %}
+</ul>
+<hr>
+<form action="{% url "movies:comments_create" movie.pk%}" method='POST' class="mb-4">
+  {% csrf_token %}
+  <div class="mb-3">
+    {{ comment_form.content.label_tag }} <!-- Label for the comment input -->
+    {{ comment_form.content }}
+  </div>
+  <input type="submit" value='Submit'>
+</form>
+
+<a href="{% url "movies:update" movie.pk%}">UPDATE</a>
+<form action="{% url "movies:delete" movie.pk %}">
+  {% csrf_token %}
+  <input type="submit" value='DELETE'>
+</form>
+<a href="{% url "movies:index" %}">BACK</a>
+{% endblock content %}
