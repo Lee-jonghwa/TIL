@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+  // 1. while, 0부터 5까지 출력
+  let a = 0
+  while (a < 6) {
+    console.log(a)
+    a += 1
+  }
+
+  // 2. for, 0부터 5까지 출력
+  for (let b = 0; b < 6; b ++) {
+    console.log(b)
+  }
+
+
+
+  // 3. for...in, 3-1. a b 출력, 3-2. apple banana 출력
+  const object = {
+    a: 'apple',
+    b: 'banana'
+  }
+  // 3-1
+  for (const obj in object) {
+    console.log(obj)
+  }
+  // 3-2
+  for (const obj in object) {
+    console.log(object[obj])
+  }
+
+  // 4. for...of, 4-1. 0 1 2 3 출력, 4-2. a p p l e 출력
+  const numbers = [0, 1, 2, 3]
+  for (const number of numbers) {
+    console.log(number)
+  }
+
+  const myStr = 'apple'
+  for (const char of myStr) {
+    console.log(char)
+  }
+
+  //5. for...in 과 for...of 의 차이, 5-1. 0, 1, 2 출력, 5-2. a, b, c 출력
+  const arr = ['a', 'b', 'c']
+  // for ... in
+  for (const x in arr) {
+    console.log(x)
+  }
+  // for ... of
+  for (const y of arr) {
+    console.log(y)
+  }
+
+  </script>
+</body>
+
+</html>

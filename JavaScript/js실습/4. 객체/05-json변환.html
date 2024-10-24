@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const jsObject = {
+        coffee: 'Americano',
+        iceCream: 'Cookie and cream'
+    }
+
+    // 파이썬에서는 json을 리스트나 딕셔너리로 변환해서 사용
+    // js에서는 json을 object(객체)로 변환해서 사용
+
+    // 2가지만 암기
+    // 1. Object를 json으로 변환: JSON.stringify()
+    // 2. json을 Object로 변환: JSON.parse()
+
+
+    const objToJson = JSON.stringify(jsObject)
+    console.log(objToJson) // json 파일 출력
+    console.log(typeof objToJson) // string
+
+    const jsonToObj = JSON.parse(objToJson)
+    console.log(jsonToObj)
+    console.log(typeof jsonToObj) // object
+  </script>
+</body>
+
+</html>

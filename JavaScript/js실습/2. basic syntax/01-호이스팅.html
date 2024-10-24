@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var name
+    console.log(name) // 이종화
+    var name = '이종화'
+    // 변수 선언이 출력의 아래쪽에 있더라도 변수에 할당되어 출력됨
+    // var 에서만 적용됨
+    
+
+    // 호이스팅이 발생하긴 하지만 TDZ(Temperal Dead Zone) 때문에 에러 발생
+    console.log(age)
+    let age = 30
+
+    console.log(height)
+    const height = 180
+
+
+  </script>
+</body>
+</html>

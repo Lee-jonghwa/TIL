@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const user = {
+      name: 'Alice',
+      greeting: function () {
+        return 'hello'
+      }
+    }
+
+    // optional-chaining의 목적?
+    // user.address.street -> undefined로 나오길 원하는 상황
+    // -> TypeError 발생
+
+    // console.log(user.address && user.address.street)
+    console.log(user.address?.street)
+
+    // 나쁜 예
+    // 메서드를 호출할 수 있는 객체는 필수값임
+    console.log(myUser?.address.street) // ReferenceError
+  </script>
+</body>
+
+</html>

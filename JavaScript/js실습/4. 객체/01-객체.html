@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const user = {
+      name: 'Alice',
+      'key with space': true,
+      // 메서드 정의 => 객체 안에 함수가 있는 경우 / 파이썬 클래스 느낌
+      // 메서드 호출: 객체.메서드()
+      greeting: function () {
+        return 'hello'
+      }
+    }
+
+    // 조회 두가지 방법
+
+    // 1. 객체.속성
+    console.log(user.name) // alice
+    // 2. 객체[속성]
+    // 속성이 1)문자열 2)특수문자 3)숫자로 시작
+    console.log(user['key with space']) // true
+ 
+    // 추가
+    user.address = 'Korea'
+    console.log(user.address)
+
+    // 수정
+    user.name = 'Bob'
+    console.log(user.name)
+
+    // 삭제
+    delete user.name
+    console.log(user.name) // undefined (없는 속성 접근 시)
+
+    // in 연산자
+    // 속성이 객체 있는지 확인
+    console.log('greeting' in user) // true 
+    console.log('hello' in user) // false -> value이기 때문
+
+    // 메서드 호출
+    console.log(user.greeting())
+
+    //this 키워드를 사용
+    // ex) 객체 내부의 다른 속성을 참조
+
+    const user2 = {
+      name : '철수',
+      greeting() {
+        return '안녕하세요 ' + this.name + '님'
+        // user2를 가리킴 -> 메서드로 정의되었기 때문에 항상 user2를 사용하여 호출 됨
+      }
+    }
+
+    console.log(user2.greeting())
+
+
+  </script>
+</body>
+
+</html>

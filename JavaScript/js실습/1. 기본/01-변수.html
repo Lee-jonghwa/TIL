@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- var, let, const
+  let, const: 재선언 불가
+  let : 재할당 가능
+  const : 재할당 불가능 -->
+
+  <!-- camelCase
+  맨 첫 단어의 첫 글자는 소문자로, 단어와 단어를 연결하되, 연결한 첫 글자를 대문자로  -->
+
+  <!-- DOM: 웹 페이지를 객체로서 제공 -->
+  <script>
+    let firstNumber = 10
+
+    // 재선언 불가능
+    // let firstNumber = 20
+    
+    // 재할당 가능
+    firstNumber = 20
+    console.log(firstNumber)
+
+    const secondNumber = 10
+    // const는 재선언 재할당 불가능 => 블록스코프, 추적 쉬우므로 주로 사용
+    // const secondNumber = 20
+    // secondNumber = 20
+    console.log(secondNumber)
+
+
+    // var a = 10
+    a = 10 // 선언 키워드를 넣디 않을 때 default 값은 val
+    console.log(a)
+
+
+  </script>
+</body>
+</html>

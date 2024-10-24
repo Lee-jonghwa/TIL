@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 1. 단축 속성
+    const name = 'Alice'
+    const age = 30
+
+    const user = {
+      name,
+      age
+    }
+
+    // 2. 단축 메서드
+    const myObj = {
+      myFunc : function() {
+        return 'Hello'
+      },
+      // 단축
+      myFunc2 () {
+        return 'Hello2'
+      }
+    }
+
+    // 3. 계산된 속성
+    const product = prompt('물건 이름을 입력하세요') // 브라우저에서 입력
+    const prefix = 'my'
+    const suffix = 'property'
+
+    const bag = {
+      [product] : 5,
+      [prefix + suffix] : 'value'
+    }
+
+    console.log(bag)
+
+    // 4. 구조 분해 할당
+    // 4-1. 변수에 객체의 값을 할당
+    // 변수 = 객체.속성 --> 구조 분해 할당
+    const userInfo = {
+      firstName: 'Alice',
+      userId: 'alice123',
+      email: 'alice123@gmail.com'
+    }
+
+    const {firstName, userId, email} = userInfo
+    console.log(firstName, userId, email)
+
+    // 4-2 함수의 매개변수로 활용
+    // 인자의 순서를 바꿔도 잘 나옴
+    // 인자가 없으면 undefined 반환
+    function printInfo({name,age,city}) {
+      console.log(`이름: ${name} 나이: ${age} email: ${city}`)
+    }
+
+    const person = {
+      name : 'Bob',
+      age : 35,
+      city : 'London',
+      address : 'home',
+    }
+
+    printInfo(person)
+
+    // 5. 전개 구문
+    // 객체 복사
+    const obj = {b:2, c:3}
+    const newObj = {a:1, ...obj, d:4}
+    // key값이 겹치면 기존에 있는 데이터가 우승
+    console.log(newObj)
+
+    // 복사본이 바뀌는 경우 -> 얕은 복사이므로 원본이 바뀜
+    
+
+    // 6. 유용한 객체 메서드
+    const profile = {
+      name: 'Alice',
+      age: 30
+    }
+
+    // 속성만 얻어내고 싶다 Object.keys()
+    // 값만 얻어내고 싶다. Object.values()
+
+    console.log(Object.keys(profile))
+    console.log(Object.values(profile))
+
+  </script>
+</body>
+
+</html>
