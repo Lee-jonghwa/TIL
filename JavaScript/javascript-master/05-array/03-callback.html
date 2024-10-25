@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 1
+    const numbers1 = [1, 2, 3]
+    // 배열이 콜백함수의 인자로 요소를 하나로 넘겨준다고 생각
+    numbers1.forEach(function (number) {
+      console.log(number)
+    })
+
+    // 2
+    const numbers2 = [1, 2, 3]
+
+    const callBackFunc = function (number) {
+      console.log(number)
+    }
+    // 괄호 넣지 않음 주의
+    numbers2.forEach(callBackFunc)
+
+  </script>
+</body>
+
+</html>
