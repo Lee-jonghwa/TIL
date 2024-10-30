@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" class="input-text">
+  <button id="btn">+</button>
+  <ul></ul>
+
+  <script>
+    // 1. 필요한 요소들 일단 선택
+    const inputTag = document.querySelector('.input-text')
+    const btn = document.querySelector('#btn')
+    const ulTag = document.querySelector('ul')
+
+    // 2. 콜백 함수 (실제 todo 데이터를 생성 후 추가하는 로직)
+    const addTodo = function (event) {
+      // 2-1. 사용자 입력 데이터 저장
+      const inputData = inputTag.value
+      if (inputData.trim()) {
+        const liTag = document.createElement('li')
+        liTag.textContent = inputData
+        ulTag.appendChild(liTag)
+        inputTag.value = ''
+      } else {
+        window.alert('todo를 입력해주세요.')
+      }
+    }
+
+    // 3. 버튼에 이벤트 핸들러 부착
+    btn.addEventListener('click', addTodo)
+  </script>
+</body>
+
+</html>

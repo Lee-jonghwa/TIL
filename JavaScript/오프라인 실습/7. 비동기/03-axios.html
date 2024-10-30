@@ -1,0 +1,70 @@
+<!-- axios.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+
+<!-- AJAX의 주된 목적은 "새로고침 없이 비동기적으로 서버와 통신하기 위해서" 입니다. -->
+<!-- Axios는 AJAX를 쉽게 사용하게 해주는 '라이브러리'입니다 -->
+<body>
+  <!-- axios를 쓰는 2가지 방법 1. cdn 2. npm 라이브러리 설치-->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // // 1. Promise 객체를 변수에 저장
+    // const promiseObj = axios({
+    //   method: 'get', // HTTP 메서드
+    //   url: 'https://api.thecatapi.com/v1/images/search' // 요청 보낼 주소(url)
+    // })
+
+    // console.log(promiseObj) // Promise object 출력
+
+    // // promise 객체 처리 방법-> then, catch
+    // promiseObj
+    //   // .then() : 요청이 성공했을 때
+    //   .then((response) => {
+    //     console.log(response) // 전체 응답 객체
+    //     console.log(response.data)
+    //     console.log(response.data[0].url)
+    //   })
+
+    //   // .catch() : 요청이 실패했을 때
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+    
+    // console.log('안녕하세요')
+    // // console.log('안녕하세요') -> 즉시 실행
+    // // console.log(response) -> 서버에 요청을 보내고 응답이 도착했을 때
+
+
+    // 2. Promise 객체를 바로 처리
+    axios({
+      method: 'get', // HTTP 메서드
+      url: 'https://api.thecatapi.com/v1/images/search' // 요청 보낼 주소(url)
+    })
+    .then((response) => {
+        console.log(response) // 전체 응답 객체
+        console.log(response.data)
+        console.log(response.data[0].url)
+    })
+    // .catch() : 요청이 실패했을 때
+    .catch((error) => {
+      console.log(error)
+    })
+
+    // promise -> 나중에 데이터를 줄게 라는 약속
+    // 데이터를 받아오는 과정은 시간이 걸림
+    // 1. 데이터 요청 -> 2. 데이터 도착 then() -> 3. 오류 발생 catch()
+    // 결론 시간이 걸리는 동안 다른 코드를 실행할 수 있도록 하기 위해 promise 사용
+
+  </script>
+
+</body>
+
+</html>

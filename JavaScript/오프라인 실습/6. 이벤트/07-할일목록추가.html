@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+</head>
+
+<body>
+
+ <input type="text" class="input-text">
+
+ <button id="btn">+</button>
+
+ <ul></ul>
+
+ <script>
+  // 1. querySelector
+  const inputTag = document.querySelector('.input-text') 
+  const ulTag = document.querySelector('ul')            
+  const btn = document.querySelector('#btn')            
+
+  // 2. 콜백
+  // 할 일을 추가하는 함수
+  const addTodo = function (event) {
+    // 입력창에 입력한 값을 할당
+    const inputData = inputTag.value
+    // li 요소 생성
+    const liTag = document.createElement('li')
+    // li 태그 textcontent 할당
+    liTag.textContent = inputData
+    // ul태그에 li태그를 자식요소로 추가
+    ulTag.appendChild(liTag)
+    // 입력창 초기화
+    inputTag.value = ''
+  }
+
+
+  // 3. eventListener
+  btn.addEventListener('click', addTodo)
+
+ </script>
+</body>
+
+</html>
